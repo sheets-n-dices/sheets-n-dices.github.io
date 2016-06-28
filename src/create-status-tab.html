@@ -1,0 +1,43 @@
+<html><head><meta charset="UTF-8"><link rel="import" href="dnd-app.html"></head><body><dom-module id="create-status-tab">
+
+    <template>
+
+        <style>:host{display:block;@apply (--layout-vertical);padding:16px;}paper-card{margin-bottom:16px;}paper-fab{position:absolute;bottom:16px;right:16px;}.card-actions-button{color:#F44336;}</style>
+
+        <template is="dom-repeat" items="{{ statusList }}">
+
+            <paper-card>
+
+                <div class="card-content">
+                    <paper-input-container>
+                        <label>Name</label>
+                        <input is="iron-input" bind-value="{{ item.name }}">
+                    </paper-input-container>
+
+                    <paper-input-container>
+                        <label>Inital Value</label>
+                        <input is="iron-input" bind-value="{{ item.baseValue }}">
+                    </paper-input-container>
+
+                    <paper-input-container>
+                        <label>Value Modifier per Level</label>
+                        <input is="iron-input" bind-value="{{ item.levelModifier }}">
+                    </paper-input-container>
+                </div>
+
+                <div class="card-actions">
+                    <paper-button class="card-actions-button" on-click="_deleteCard">Delete</paper-button>
+                </div>
+
+            </paper-card>
+
+        </template>
+
+        <paper-fab icon="add" on-click="_newStatus"></paper-fab>
+
+    </template>
+
+</dom-module>
+
+<script>Polymer({is:"create-status-tab",properties:{statusList:{type:Array,notify:!0,reflectToAttribute:!0}},_newStatus:function(t){console.log("Status Card Add"),this.push("statusList",{name:"Str/Dex/Int/...",value:0,baseValue:0,levelModifier:0,persistBonus:0,volatileBonus:0})},_deleteCard:function(t){console.log("Status Card Deleted"),console.log(t)}});</script>
+</body></html>

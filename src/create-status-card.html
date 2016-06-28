@@ -1,0 +1,35 @@
+<html><head><link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-input/paper-input-container.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+
+</head><body><dom-module id="status-card">
+    <template>
+        <style>:host{width:100%;@apply (--layout-horizontal);@apply (--layout-center-justified);}paper-card{margin-bottom:16px;}.card-actions-button{color:#F44336;}</style>
+
+        <paper-card>
+            <div class="card-content">
+                <paper-input-container>
+                    <label>Name</label>
+                    <input is="iron-input" bind-value="{{ name }}">
+                </paper-input-container>
+
+                <paper-input-container>
+                    <label>Inital Value</label>
+                    <input is="iron-input" bind-value="{{ baseValue }}">
+                </paper-input-container>
+
+                <paper-input-container>
+                    <label>Value Modifier per Level</label>
+                    <input is="iron-input" bind-value="{{ levelModifier }}">
+                </paper-input-container>
+            </div>
+            <div class="card-actions">
+                <paper-button class="card-actions-button" on-click="_deleteCard">Delete</paper-button>
+            </div>
+        </paper-card>
+    </template>
+</dom-module>
+
+<script>Polymer({is:"create-status-card",properties:{index:{type:Number},name:{type:String,notify:!0,reflectToAttribute:!0},value:{type:String,notify:!0,reflectToAttribute:!0},baseValue:{type:String,notify:!0,reflectToAttribute:!0},levelModifier:{type:String,notify:!0,reflectToAttribute:!0},persistBonus:{type:String,notify:!0,reflectToAttribute:!0},volatileBonus:{type:String,notify:!0,reflectToAttribute:!0}},_requestDeleteStatusCard:function(t){}});</script>
+</body></html>

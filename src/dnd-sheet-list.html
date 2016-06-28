@@ -1,0 +1,50 @@
+<html><head><meta charset="UTF-8"><link rel="import" href="dnd-app.html"></head><body><dom-module id="dnd-sheet-list">
+
+    <template>
+
+        <style>:host{display:block;@apply (--layout-vertical);padding:16px;}paper-card{margin-bottom:16px;}h2{color:var(--secondary-text);}a{position:fixed;bottom:16px;right:16px;}.card-content-row{@apply (--layout-horizontal);@apply (--layout-justified);margin-top:-16px;margin-bottom:-16px;}</style>
+
+        <template is="dom-repeat" items="{{ sheetList.list }}">
+
+                <paper-card>
+
+                    <div class="card-content">
+                        <div class="card-content-row">
+                            <p>Personagem:</p><p>{{ item.name }}</p>
+                        </div>
+                        <div class="card-content-row">
+                            <p>Level:</p><p>{{ item.level }}</p>
+                        </div>
+                        <div class="card-content-row">
+                            <p>Classe:</p><p>{{ item.job }}</p>
+                        </div>
+                        <div class="card-content-row">
+                            <p>Raça:</p><p>{{ item.race }}</p>
+                        </div>
+                        <div class="card-content-row">
+                            <p>Sistema:</p><p>{{ item.system }}</p>
+                        </div>
+                    </div>
+
+                </paper-card>
+
+            </template>
+
+        <template is="dom-if" if="{{ !hasSheet }}">
+
+            <div>
+                <h2>Nothing to See Here :(</h2>
+            </div>
+
+        </template>
+
+        <a href="/create">
+            <paper-fab icon="add"></paper-fab>
+        </a>
+
+    </template>
+
+    <script>Polymer({is:"dnd-sheet-list",properties:{active:{type:Boolean,value:!1,reflectToAttribute:!0},hasSheet:{type:Boolean,value:!1},sheetList:{type:Object,notify:!0}},observers:["_sheetListUpdate(sheetList.*)"],attached:function(e){Polymer.updateStyles()},_sheetListUpdate:function(e){null==this.sheetList||0==this.sheetList.list.length?this.hasSheet=!1:this.hasSheet=!0}});</script>
+
+</dom-module>
+</body></html>
