@@ -16,5 +16,5 @@
 
 </dom-module>
 
-<script>Polymer({is:"create-status-tab",properties:{statusList:{type:Array,notify:!0,reflectToAttribute:!0}},listeners:{requestDeleteStatus:"_deleteStatus"},_newStatus:function(t){this.push("statusList",{name:"Str/Dex/Int/...",value:0,baseValue:0,levelModifier:0,persistBonus:0,volatileBonus:0})},_deleteStatus:function(t){this.splice("statusList",t.detail.index,1)}});</script>
+<script>Polymer({is:"create-status-tab",properties:{statusList:{type:Array,notify:!0}},listeners:{requestDeleteStatus:"_deleteStatus"},_newStatus:function(t){this.push("statusList",{name:"Str/Dex/Int/...",value:0,baseValue:0,levelModifier:0,persistBonus:0,volatileBonus:0})},_deleteStatus:function(t){this.splice("statusList",t.detail.index,1)}});</script>
 </body></html>

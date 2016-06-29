@@ -14,5 +14,5 @@
     </template>
 </dom-module>
 
-<script>Polymer({is:"create-defenses-tab",properties:{defensesList:{type:Array,notify:!0,reflectToAttribute:!0},statusList:{type:Array}},listeners:{requestDeleteCard:"_deleteDefenses"},_newDefenses:function(e){this.push("defensesList",{name:"Armor/Magic Resistence/...",value:0,baseValue:0,statusBase:"None",statusBaseModifier:1,levelModifier:.5,persistBonus:0,volatileBonus:0})},_deleteDefenses:function(e){this.splice("defensesList",e.detail.index,1)}});</script>
+<script>Polymer({is:"create-defenses-tab",properties:{defensesList:{type:Array,notify:!0},statusList:{type:Array}},listeners:{requestDeleteCard:"_deleteDefenses"},_newDefenses:function(e){this.push("defensesList",{name:"Armor/Magic Resistence/...",value:0,baseValue:0,statusBase:"None",statusBaseModifier:1,levelModifier:.5,persistBonus:0,volatileBonus:0})},_deleteDefenses:function(e){this.splice("defensesList",e.detail.index,1)}});</script>
 </body></html>

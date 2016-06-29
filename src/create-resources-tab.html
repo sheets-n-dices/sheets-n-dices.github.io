@@ -14,5 +14,5 @@
     </template>
 </dom-module>
 
-<script>Polymer({is:"create-resources-tab",properties:{resourcesList:{type:Array,notify:!0,reflectToAttribute:!0},statusList:{type:Array}},listeners:{requestDeleteCard:"_deleteResources"},_newResources:function(e){this.push("resourcesList",{name:"HP/MP/...",value:0,baseValue:0,statusBase:"None",statusBaseModifier:1,levelModifier:.5,persistBonus:0,volatileBonus:0})},_deleteResources:function(e){this.splice("resourcesList",e.detail.index,1)}});</script>
+<script>Polymer({is:"create-resources-tab",properties:{resourcesList:{type:Array,notify:!0},statusList:{type:Array}},listeners:{requestDeleteCard:"_deleteResources"},_newResources:function(e){this.push("resourcesList",{name:"HP/MP/...",value:0,baseValue:0,statusBase:"None",statusBaseModifier:1,levelModifier:.5,persistBonus:0,volatileBonus:0})},_deleteResources:function(e){this.splice("resourcesList",e.detail.index,1)}});</script>
 </body></html>

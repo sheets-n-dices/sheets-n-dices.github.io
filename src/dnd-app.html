@@ -734,7 +734,7 @@ for(n in this._instanceProps)e._addPropertyEffect(n,"function",this._createInsta
     </template>
 </dom-module>
 
-<script>Polymer({is:"create-status-card",properties:{index:{type:Number},name:{type:String,notify:!0,reflectToAttribute:!0},baseValue:{type:String,notify:!0,reflectToAttribute:!0},levelModifier:{type:String,notify:!0,reflectToAttribute:!0}},_requestDeleteStatus:function(e){this.fire("requestDeleteStatus",{index:this.index})}});</script>
+<script>Polymer({is:"create-status-card",properties:{index:{type:Number},name:{type:String,notify:!0},baseValue:{type:String,notify:!0},levelModifier:{type:String,notify:!0}},_requestDeleteStatus:function(e){this.fire("requestDeleteStatus",{index:this.index})}});</script>
 <script>Polymer.IronFormElementBehavior={properties:{name:{type:String},value:{notify:!0,type:String},required:{type:Boolean,value:!1},_parentForm:{type:Object}},attached:function(){this.fire("iron-form-element-register")},detached:function(){this._parentForm&&this._parentForm.fire("iron-form-element-unregister",{target:this})}};</script>
 <script>Polymer.IronValidatableBehaviorMeta=null,Polymer.IronValidatableBehavior={properties:{validator:{type:String},invalid:{notify:!0,reflectToAttribute:!0,type:Boolean,value:!1},_validatorMeta:{type:Object},validatorType:{type:String,value:"validator"},_validator:{type:Object,computed:"__computeValidator(validator)"}},observers:["_invalidChanged(invalid)"],registered:function(){Polymer.IronValidatableBehaviorMeta=new Polymer.IronMeta({type:"validator"})},_invalidChanged:function(){this.invalid?this.setAttribute("aria-invalid","true"):this.removeAttribute("aria-invalid")},hasValidator:function(){return null!=this._validator},validate:function(a){return this.invalid=!this._getValidity(a),!this.invalid},_getValidity:function(a){return this.hasValidator()?this._validator.validate(a):!0},__computeValidator:function(){return Polymer.IronValidatableBehaviorMeta&&Polymer.IronValidatableBehaviorMeta.byKey(this.validator)}};</script>
 <dom-module id="iron-a11y-announcer" assetpath="../bower_components/iron-a11y-announcer/">
@@ -928,15 +928,15 @@ for(n in this._instanceProps)e._addPropertyEffect(n,"function",this._createInsta
     </template>
 </dom-module>
 
-<script>Polymer({is:"create-statusbased-card",properties:{index:{type:Number},name:{type:String,notify:!0,reflectToAttribute:!0},baseValue:{type:String,notify:!0,reflectToAttribute:!0},statusBase:{type:String,value:"None",notify:!0,reflectToAttribute:!0},statusBaseModifier:{type:String,notify:!0,reflectToAttribute:!0},levelModifier:{type:String,notify:!0,reflectToAttribute:!0},statusList:{type:Array}},_requestDeleteCard:function(t){this.fire("requestDeleteCard",{index:this.index})}});</script>
+<script>Polymer({is:"create-statusbased-card",properties:{index:{type:Number},name:{type:String,notify:!0},baseValue:{type:String,notify:!0},statusBase:{type:String,value:"None",notify:!0},statusBaseModifier:{type:String,notify:!0},levelModifier:{type:String,notify:!0},statusList:{type:Array}},_requestDeleteCard:function(e){this.fire("requestDeleteCard",{index:this.index})}});</script>
 </div><dom-module id="dnd-app">
 
     <template>
 
         <style>:root{--primary-color:#673AB7;--darker-primary-color:#512DA8;--light-primary-color:#D1C4E9;--secondary-color:#03A9F4;--focus-color:#0288D1;--primary-text:#212121;--secondary-text:#727272;--divider-color:#B6B6B6;--paper-fab-background:var(--secondary-color);--paper-fab-keyboard-focus-background:var(--focus-color);--paper-tabs-selection-bar-color:var(--secondary-color);--paper-input-container-focus-color:var(--secondary-color);}:host{display:block;}app-header{background-color:var(--primary-color);color:#fff;}app-header paper-icon-button{--paper-icon-button-ink-color:white;}app-toolbar{background-color:var(--primary-color);color:#fff;}app-toolbar > div{padding-left:8px;}.drawer-list{margin:0 16px;}.drawer-list a{display:block;padding:0 16px;line-height:40px;text-decoration:none;color:black;}.drawer-list a.iron-selected{color:black;font-weight:bold;}.drawer-list a:focus{outline-style:hidden !important;}:focus{outline:0;}</style>
 
-        <app-location route="{{route}}"></app-location>
-        <app-route route="{{route}}" pattern="/:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
+        <app-location route="{{ route }}"></app-location>
+        <app-route route="{{ route }}" pattern="/:page" data="{{ routeData }}" tail="{{ subroute }}"></app-route>
 
         <dnd-sheetlist-data sheet-list="{{ sheetList }}"></dnd-sheetlist-data>
         <dnd-basesheet-data base-sheet="{{ baseSheet }}"></dnd-basesheet-data>
@@ -946,7 +946,7 @@ for(n in this._instanceProps)e._addPropertyEffect(n,"function",this._createInsta
             
             <app-drawer id="appDrawer" swipe-open="">
                 <app-toolbar>Menu</app-toolbar>
-                <iron-selector class="drawer-list" attr-for-selected="route" selected="[[page]]" role="navigation">
+                <iron-selector class="drawer-list" attr-for-selected="route" selected="[[ page ]]" role="navigation">
                     <a route="list" href="/list">Sheet List</a>
                     <a route="create" href="/create">New Sheet</a>
                 </iron-selector>
@@ -962,7 +962,7 @@ for(n in this._instanceProps)e._addPropertyEffect(n,"function",this._createInsta
                     </app-toolbar>
                 </app-header>
 
-                <iron-pages role="main" attr-for-selected="route" selected="[[page]]">
+                <iron-pages role="main" attr-for-selected="route" selected="[[ page ]]">
                     <dnd-sheet-list route="list" sheet-list="{{ sheetList }}"></dnd-sheet-list>
                     <dnd-sheet-create route="create" new-sheet="{{ newSheet }}" base-sheet="{{ baseSheet }}" sheet-list="{{ sheetList }}"></dnd-sheet-create>
                     <dnd-sheet-detail route="detail"></dnd-sheet-detail>
@@ -973,7 +973,7 @@ for(n in this._instanceProps)e._addPropertyEffect(n,"function",this._createInsta
 
     </template>
 
-    <script>Polymer({is:"dnd-app",properties:{page:{type:String,reflectToAttribute:!0,observer:"_pageChanged"}},observers:["_routePageChanged(routeData.page)"],attached:function(e){this.importHref(this.resolveUrl("dnd-sheet-list.html"),null,null,!0),this.importHref(this.resolveUrl("dnd-sheet-create.html"),null,null,!0),this.importHref(this.resolveUrl("dnd-sheet-detail.html"),null,null,!0)},_routePageChanged:function(e){this.page=e||"list"},_pageChanged:function(e){this.$.appDrawer.opened&&(this.$.appDrawer.opened=!this.$.appDrawer.opened)}});</script>
+    <script>Polymer({is:"dnd-app",properties:{page:{type:String,notify:!0,reflectToAttribute:!0,observer:"_pageChanged"}},observers:["_routePageChanged(routeData.page)"],listeners:{requestChangeRoute:"_changeRoute"},attached:function(e){this.importHref(this.resolveUrl("dnd-sheet-list.html"),null,null,!0),this.importHref(this.resolveUrl("dnd-sheet-create.html"),null,null,!0),this.importHref(this.resolveUrl("dnd-sheet-detail.html"),null,null,!0)},_changeRoute:function(e){this.set("route.path",e.detail.route)},_routePageChanged:function(e){this.page=e||"list"},_pageChanged:function(e){this.$.appDrawer.opened&&(this.$.appDrawer.opened=!this.$.appDrawer.opened)}});</script>
 
 </dom-module>
 </body></html>

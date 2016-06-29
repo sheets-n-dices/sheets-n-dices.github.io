@@ -48,5 +48,5 @@
     </template>
 </dom-module>
 
-<script>Polymer({is:"create-statusbased-card",properties:{index:{type:Number},name:{type:String,notify:!0,reflectToAttribute:!0},baseValue:{type:String,notify:!0,reflectToAttribute:!0},statusBase:{type:String,value:"None",notify:!0,reflectToAttribute:!0},statusBaseModifier:{type:String,notify:!0,reflectToAttribute:!0},levelModifier:{type:String,notify:!0,reflectToAttribute:!0},statusList:{type:Array}},_requestDeleteCard:function(t){this.fire("requestDeleteCard",{index:this.index})}});</script>
+<script>Polymer({is:"create-statusbased-card",properties:{index:{type:Number},name:{type:String,notify:!0},baseValue:{type:String,notify:!0},statusBase:{type:String,value:"None",notify:!0},statusBaseModifier:{type:String,notify:!0},levelModifier:{type:String,notify:!0},statusList:{type:Array}},_requestDeleteCard:function(e){this.fire("requestDeleteCard",{index:this.index})}});</script>
 </body></html>
