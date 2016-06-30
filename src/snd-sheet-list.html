@@ -1,4 +1,4 @@
-<html><head><meta charset="UTF-8"><link rel="import" href="dnd-app.html"></head><body><dom-module id="dnd-sheet-list">
+<html><head><meta charset="UTF-8"><link rel="import" href="snd-app.html"></head><body><dom-module id="snd-sheet-list">
 
     <template>
 
@@ -7,8 +7,8 @@
         <template is="dom-repeat" items="{{ sheetList.list }}">
 
             <paper-card>
-
                 <div class="card-content">
+
                     <div class="card-content-row">
                         <p>Personagem:</p><p>{{ item.name }}</p>
                     </div>
@@ -24,8 +24,8 @@
                     <div class="card-content-row">
                         <p>Sistema:</p><p>{{ item.system }}</p>
                     </div>
-                </div>
 
+                </div>
             </paper-card>
 
         </template>
@@ -44,7 +44,7 @@
 
     </template>
 
-    <script>Polymer({is:"dnd-sheet-list",properties:{hasSheet:{type:Boolean,value:!1},sheetList:{type:Object,notify:!0}},observers:["_sheetListUpdate(sheetList.*)"],attached:function(e){Polymer.updateStyles()},_sheetListUpdate:function(e){null==this.sheetList||0==this.sheetList.list.length?this.hasSheet=!1:this.hasSheet=!0}});</script>
+    <script>Polymer({is:"snd-sheet-list",properties:{hasSheet:{type:Boolean,value:!1},sheetList:{type:Object,notify:!0}},observers:["_sheetListUpdate(sheetList.*)"],attached:function(e){Polymer.updateStyles()},_sheetListUpdate:function(e){null==this.sheetList||0==this.sheetList.list.length?this.hasSheet=!1:this.hasSheet=!0}});</script>
 
 </dom-module>
 </body></html>

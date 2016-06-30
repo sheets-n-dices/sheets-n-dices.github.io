@@ -546,7 +546,7 @@ for(n in this._instanceProps)e._addPropertyEffect(n,"function",this._createInsta
 <script>Polymer({is:"iron-selector",behaviors:[Polymer.IronMultiSelectableBehavior]});</script>
 <dom-module id="iron-localstorage" assetpath="../bower_components/iron-localstorage/"></dom-module>
 <script>Polymer({is:"iron-localstorage",properties:{name:{type:String,value:""},value:{type:Object,notify:!0},useRaw:{type:Boolean,value:!1},autoSaveDisabled:{type:Boolean,value:!1},errorMessage:{type:String,notify:!0},_loaded:{type:Boolean,value:!1}},observers:["_debounceReload(name,useRaw)","_trySaveValue(autoSaveDisabled)","_trySaveValue(value.*)"],ready:function(){this._boundHandleStorage=this._handleStorage.bind(this)},attached:function(){window.addEventListener("storage",this._boundHandleStorage)},detached:function(){window.removeEventListener("storage",this._boundHandleStorage)},_handleStorage:function(e){e.key==this.name&&this._load(!0)},_trySaveValue:function(){this._doNotSave||this._loaded&&!this.autoSaveDisabled&&this.debounce("save",this.save)},_debounceReload:function(){this.debounce("reload",this.reload)},reload:function(){this._loaded=!1,this._load()},_load:function(e){var a=window.localStorage.getItem(this.name);if(null===a)this._loaded=!0,this._doNotSave=!0,this.value=null,this._doNotSave=!1,this.fire("iron-localstorage-load-empty",{externalChange:e});else{if(!this.useRaw)try{a=JSON.parse(a)}catch(o){this.errorMessage="Could not parse local storage value",console.error("could not parse local storage value",a),a=null}this._loaded=!0,this._doNotSave=!0,this.value=a,this._doNotSave=!1,this.fire("iron-localstorage-load",{externalChange:e})}},save:function(){var e=this.useRaw?this.value:JSON.stringify(this.value);try{null===this.value||void 0===this.value?window.localStorage.removeItem(this.name):window.localStorage.setItem(this.name,e)}catch(a){this.errorMessage=a.message,console.error("localStorage could not be saved. Safari incoginito mode?",a)}}});</script>
-<dom-module id="dnd-sheetlist-data" assetpath="/">
+<dom-module id="snd-sheetlist-data" assetpath="/">
     <template>
 
 		<iron-localstorage name="DungeonNDicesSheetList" value="{{ sheetList }}" on-iron-localstorage-load-empty="_initializeSheetList"></iron-localstorage>
@@ -554,8 +554,8 @@ for(n in this._instanceProps)e._addPropertyEffect(n,"function",this._createInsta
     </template>
 </dom-module>
 
-<script>Polymer({is:"dnd-sheetlist-data",properties:{sheetList:{type:Object,notify:!0,reflectToAttribute:!0}},_initializeSheetList:function(t){this.sheetList={list:[]}}});</script>
-<dom-module id="dnd-basesheet-data" assetpath="/">
+<script>Polymer({is:"snd-sheetlist-data",properties:{sheetList:{type:Object,notify:!0,reflectToAttribute:!0}},_initializeSheetList:function(t){this.sheetList={list:[]}}});</script>
+<dom-module id="snd-basesheet-data" assetpath="/">
     <template>
 
 		<iron-localstorage name="DungeonNDicesBaseSheet" value="{{ baseSheet }}" on-iron-localstorage-load-empty="_initializeBaseSheet"></iron-localstorage>
@@ -563,8 +563,8 @@ for(n in this._instanceProps)e._addPropertyEffect(n,"function",this._createInsta
     </template>
 </dom-module>
 
-<script>Polymer({is:"dnd-basesheet-data",properties:{baseSheet:{type:Object,notify:!0,reflectToAttribute:!0}},_initializeBaseSheet:function(e){this.baseSheet={name:"",job:"",race:"",level:"1",system:"",statusList:[{name:"Str/Dex/Int/...",value:0,baseValue:0,levelModifier:0,persistBonus:0,volatileBonus:0}],resourcesList:[{name:"HP/MP/...",value:0,baseValue:0,statusBase:"None",statusBaseModifier:1,levelModifier:.5,persistBonus:0,volatileBonus:0}],defensesList:[{name:"Armor/Magic Resistence/...",value:0,baseValue:10,statusBase:"None",statusBaseModifier:1,levelModifier:.5,persistBonus:0,volatileBonus:0}],attacksList:[],skillsList:[{name:"Diplomacy/Heal...",value:0,baseValue:10,statusBase:"None",statusBaseModifier:1,levelModifier:.5,persistBonus:0,volatileBonus:0}],equipments:{head:{},chest:{},legs:{},feet:{},hands:{},cloak:{},waist:{},wrist:{},trinkets:{},weapon:{},shield:{}},persistBonusList:[],volatileBonusList:[]}}});</script>
-<dom-module id="dnd-newsheet-data" assetpath="/">
+<script>Polymer({is:"snd-basesheet-data",properties:{baseSheet:{type:Object,notify:!0,reflectToAttribute:!0}},_initializeBaseSheet:function(e){this.baseSheet={name:"",job:"",race:"",level:"1",system:"",statusList:[{name:"Str/Dex/Int/...",value:0,baseValue:0,levelModifier:0,persistBonus:0,volatileBonus:0}],resourcesList:[{name:"HP/MP/...",value:0,baseValue:0,statusBase:"None",statusBaseModifier:1,levelModifier:.5,persistBonus:0,volatileBonus:0}],defensesList:[{name:"Armor/Magic Resistence/...",value:0,baseValue:10,statusBase:"None",statusBaseModifier:1,levelModifier:.5,persistBonus:0,volatileBonus:0}],attacksList:[],skillsList:[{name:"Diplomacy/Heal...",value:0,baseValue:10,statusBase:"None",statusBaseModifier:1,levelModifier:.5,persistBonus:0,volatileBonus:0}],equipments:{head:{},chest:{},legs:{},feet:{},hands:{},cloak:{},waist:{},wrist:{},trinkets:{},weapon:{},shield:{}},persistBonusList:[],volatileBonusList:[]}}});</script>
+<dom-module id="snd-newsheet-data" assetpath="/">
     <template>
 
 		<iron-localstorage name="DungeonNDicesNewSheet" value="{{ newSheet }}" on-iron-localstorage-load-empty="_initializeNewSheet"></iron-localstorage>
@@ -572,7 +572,7 @@ for(n in this._instanceProps)e._addPropertyEffect(n,"function",this._createInsta
     </template>
 </dom-module>
 
-<script>Polymer({is:"dnd-newsheet-data",properties:{newSheet:{type:Object,notify:!0,reflectToAttribute:!0}},_initializeNewSheet:function(e){"undefined"!=typeof this.newSheet&&null!=this.newSheet||null==this.baseSheet||(this.newSheet=Object.assign({},this.baseSheet),console.log("Creating Sheet Assigned as Base Sheet"))}});</script>
+<script>Polymer({is:"snd-newsheet-data",properties:{newSheet:{type:Object,notify:!0,reflectToAttribute:!0}},_initializeNewSheet:function(e){"undefined"!=typeof this.newSheet&&null!=this.newSheet||null==this.baseSheet||(this.newSheet=Object.assign({},this.baseSheet),console.log("Creating Sheet Assigned as Base Sheet"))}});</script>
 <script>Polymer.PaperButtonBehaviorImpl={properties:{elevation:{type:Number,reflectToAttribute:!0,readOnly:!0}},observers:["_calculateElevation(focused, disabled, active, pressed, receivedFocusFromKeyboard)","_computeKeyboardClass(receivedFocusFromKeyboard)"],hostAttributes:{role:"button",tabindex:"0",animated:!0},_calculateElevation:function(){var e=1;this.disabled?e=0:this.active||this.pressed?e=4:this.receivedFocusFromKeyboard&&(e=3),this._setElevation(e)},_computeKeyboardClass:function(e){this.toggleClass("keyboard-focus",e)},_spaceKeyDownHandler:function(e){Polymer.IronButtonStateImpl._spaceKeyDownHandler.call(this,e),this.hasRipple()&&this.getRipple().ripples.length<1&&this._ripple.uiDownAction()},_spaceKeyUpHandler:function(e){Polymer.IronButtonStateImpl._spaceKeyUpHandler.call(this,e),this.hasRipple()&&this._ripple.uiUpAction()}},Polymer.PaperButtonBehavior=[Polymer.IronButtonState,Polymer.IronControlState,Polymer.PaperRippleBehavior,Polymer.PaperButtonBehaviorImpl];</script>
 <style is="custom-style">:root{--shadow-transition:{transition:box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);};--shadow-none:{box-shadow:none;};--shadow-elevation-2dp:{box-shadow:0 2px 2px 0 rgba(0, 0, 0, 0.14),
                   0 1px 5px 0 rgba(0, 0, 0, 0.12),
@@ -929,7 +929,7 @@ for(n in this._instanceProps)e._addPropertyEffect(n,"function",this._createInsta
 </dom-module>
 
 <script>Polymer({is:"create-statusbased-card",properties:{index:{type:Number},name:{type:String,notify:!0},baseValue:{type:String,notify:!0},statusBase:{type:String,value:"None",notify:!0},statusBaseModifier:{type:String,notify:!0},levelModifier:{type:String,notify:!0},statusList:{type:Array}},_requestDeleteCard:function(e){this.fire("requestDeleteCard",{index:this.index})}});</script>
-</div><dom-module id="dnd-app">
+</div><dom-module id="snd-app">
 
     <template>
 
@@ -938,9 +938,9 @@ for(n in this._instanceProps)e._addPropertyEffect(n,"function",this._createInsta
         <app-location route="{{ route }}"></app-location>
         <app-route route="{{ route }}" pattern="/:page" data="{{ routeData }}" tail="{{ subroute }}"></app-route>
 
-        <dnd-sheetlist-data sheet-list="{{ sheetList }}"></dnd-sheetlist-data>
-        <dnd-basesheet-data base-sheet="{{ baseSheet }}"></dnd-basesheet-data>
-        <dnd-newsheet-data new-sheet="{{ newSheet }}" base-sheet="{{ baseSheet }}"></dnd-newsheet-data>
+        <snd-sheetlist-data sheet-list="{{ sheetList }}"></snd-sheetlist-data>
+        <snd-basesheet-data base-sheet="{{ baseSheet }}"></snd-basesheet-data>
+        <snd-newsheet-data new-sheet="{{ newSheet }}" base-sheet="{{ baseSheet }}"></snd-newsheet-data>
 
         <app-drawer-layout fullbleed="" force-narrow="">
             
@@ -963,9 +963,9 @@ for(n in this._instanceProps)e._addPropertyEffect(n,"function",this._createInsta
                 </app-header>
 
                 <iron-pages role="main" attr-for-selected="route" selected="[[ page ]]">
-                    <dnd-sheet-list route="list" sheet-list="{{ sheetList }}"></dnd-sheet-list>
-                    <dnd-sheet-create route="create" new-sheet="{{ newSheet }}" base-sheet="{{ baseSheet }}" sheet-list="{{ sheetList }}"></dnd-sheet-create>
-                    <dnd-sheet-detail route="detail"></dnd-sheet-detail>
+                    <snd-sheet-list route="list" sheet-list="{{ sheetList }}"></snd-sheet-list>
+                    <snd-sheet-create route="create" new-sheet="{{ newSheet }}" base-sheet="{{ baseSheet }}" sheet-list="{{ sheetList }}"></snd-sheet-create>
+                    <snd-sheet-detail route="detail"></snd-sheet-detail>
                 </iron-pages>
 
             </app-header-layout>
@@ -973,7 +973,7 @@ for(n in this._instanceProps)e._addPropertyEffect(n,"function",this._createInsta
 
     </template>
 
-    <script>Polymer({is:"dnd-app",properties:{page:{type:String,notify:!0,reflectToAttribute:!0,observer:"_pageChanged"}},observers:["_routePageChanged(routeData.page)"],listeners:{requestChangeRoute:"_changeRoute"},attached:function(e){this.importHref(this.resolveUrl("dnd-sheet-list.html"),null,null,!0),this.importHref(this.resolveUrl("dnd-sheet-create.html"),null,null,!0),this.importHref(this.resolveUrl("dnd-sheet-detail.html"),null,null,!0)},_changeRoute:function(e){this.set("route.path",e.detail.route)},_routePageChanged:function(e){this.page=e||"list"},_pageChanged:function(e){this.$.appDrawer.opened&&(this.$.appDrawer.opened=!this.$.appDrawer.opened)}});</script>
+    <script>Polymer({is:"snd-app",properties:{page:{type:String,notify:!0,reflectToAttribute:!0,observer:"_pageChanged"}},observers:["_routePageChanged(routeData.page)"],listeners:{requestChangeRoute:"_changeRoute"},attached:function(e){this.importHref(this.resolveUrl("snd-sheet-list.html"),null,null,!0),this.importHref(this.resolveUrl("snd-sheet-create.html"),null,null,!0),this.importHref(this.resolveUrl("snd-sheet-detail.html"),null,null,!0)},_changeRoute:function(e){this.set("route.path",e.detail.route)},_routePageChanged:function(e){this.page=e||"list"},_pageChanged:function(e){this.$.appDrawer.opened&&(this.$.appDrawer.opened=!this.$.appDrawer.opened)}});</script>
 
 </dom-module>
 </body></html>

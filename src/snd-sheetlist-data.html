@@ -1,7 +1,7 @@
 <html><head><link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/iron-localstorage/iron-localstorage.html">
 
-</head><body><dom-module id="dnd-sheetlist-data">
+</head><body><dom-module id="snd-sheetlist-data">
     <template>
 
 		<iron-localstorage name="DungeonNDicesSheetList" value="{{ sheetList }}" on-iron-localstorage-load-empty="_initializeSheetList"></iron-localstorage>
@@ -9,5 +9,5 @@
     </template>
 </dom-module>
 
-<script>Polymer({is:"dnd-sheetlist-data",properties:{sheetList:{type:Object,notify:!0,reflectToAttribute:!0}},_initializeSheetList:function(t){this.sheetList={list:[]}}});</script>
+<script>Polymer({is:"snd-sheetlist-data",properties:{sheetList:{type:Object,notify:!0,reflectToAttribute:!0}},_initializeSheetList:function(t){this.sheetList={list:[]}}});</script>
 </body></html>
