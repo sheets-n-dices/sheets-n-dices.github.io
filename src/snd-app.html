@@ -549,7 +549,7 @@ for(n in this._instanceProps)e._addPropertyEffect(n,"function",this._createInsta
 <dom-module id="snd-sheetlist-data" assetpath="/">
     <template>
 
-		<iron-localstorage name="DungeonNDicesSheetList" value="{{ sheetList }}" on-iron-localstorage-load-empty="_initializeSheetList"></iron-localstorage>
+		<iron-localstorage name="SheetsNDicesSheetList" value="{{ sheetList }}" on-iron-localstorage-load-empty="_initializeSheetList"></iron-localstorage>
 
     </template>
 </dom-module>
@@ -558,7 +558,7 @@ for(n in this._instanceProps)e._addPropertyEffect(n,"function",this._createInsta
 <dom-module id="snd-basesheet-data" assetpath="/">
     <template>
 
-		<iron-localstorage name="DungeonNDicesBaseSheet" value="{{ baseSheet }}" on-iron-localstorage-load-empty="_initializeBaseSheet"></iron-localstorage>
+		<iron-localstorage name="SheetsNDicesBaseSheet" value="{{ baseSheet }}" on-iron-localstorage-load-empty="_initializeBaseSheet"></iron-localstorage>
 
     </template>
 </dom-module>
@@ -567,7 +567,7 @@ for(n in this._instanceProps)e._addPropertyEffect(n,"function",this._createInsta
 <dom-module id="snd-newsheet-data" assetpath="/">
     <template>
 
-		<iron-localstorage name="DungeonNDicesNewSheet" value="{{ newSheet }}" on-iron-localstorage-load-empty="_initializeNewSheet"></iron-localstorage>
+		<iron-localstorage name="SheetsNDicesNewSheet" value="{{ newSheet }}" on-iron-localstorage-load-empty="_initializeNewSheet"></iron-localstorage>
 
     </template>
 </dom-module>
@@ -638,6 +638,40 @@ for(n in this._instanceProps)e._addPropertyEffect(n,"function",this._createInsta
 
   <script>Polymer({is:"paper-card",properties:{heading:{type:String,value:"",observer:"_headingChanged"},image:{type:String,value:""},preloadImage:{type:Boolean,value:!1},fadeImage:{type:Boolean,value:!1},elevation:{type:Number,value:1,reflectToAttribute:!0},animatedShadow:{type:Boolean,value:!1},animated:{type:Boolean,reflectToAttribute:!0,readOnly:!0,computed:"_computeAnimated(animatedShadow)"}},_headingChanged:function(e){this.getAttribute("aria-label");this.setAttribute("aria-label",e)},_computeHeadingClass:function(e){var t="title-text";return e&&(t+=" over-image"),t},_computeAnimated:function(e){return e}});</script>
 </dom-module>
+<dom-module id="list-sheet-card" assetpath="/">
+    <template>
+        <style>:host{display:block;@apply (--layout-vertical);}paper-card{margin-bottom:16px;}.card-content-row{@apply (--layout-horizontal);@apply (--layout-justified);margin-top:-16px;margin-bottom:-16px;}</style>
+
+        <paper-card on-click="_sendRequestDetail">
+            <div class="card-content">
+
+				<div class="card-content-row">
+                    <p>Name:</p><p>{{ name }}</p>
+                </div>
+
+                <div class="card-content-row">
+                    <p>Class:</p><p>{{ job }}</p>
+                </div>
+
+                <div class="card-content-row">
+                    <p>Race:</p><p>{{ race }}</p>
+                </div>
+
+                <div class="card-content-row">
+                    <p>Level:</p><p>{{ level }}</p>
+                </div>
+
+				<div class="card-content-row">
+                    <p>System:</p><p>{{ system }}</p>
+                </div>
+
+            </div>
+        </paper-card>
+
+    </template>
+</dom-module>
+
+<script>Polymer({is:"list-sheet-card",properties:{index:{type:Number},name:{type:String},job:{type:String},race:{type:String},level:{type:Number},system:{type:String}},_sendRequestDetail:function(e){this.fire("requestDetail",{index:this.index})}});</script>
 <script>Polymer.IronMenuBehaviorImpl={properties:{focusedItem:{observer:"_focusedItemChanged",readOnly:!0,type:Object},attrForItemTitle:{type:String}},hostAttributes:{role:"menu",tabindex:"0"},observers:["_updateMultiselectable(multi)"],listeners:{focus:"_onFocus",keydown:"_onKeydown","iron-items-changed":"_onIronItemsChanged"},keyBindings:{up:"_onUpKey",down:"_onDownKey",esc:"_onEscKey","shift+tab:keydown":"_onShiftTabDown"},attached:function(){this._resetTabindices()},select:function(e){this._defaultFocusAsync&&(this.cancelAsync(this._defaultFocusAsync),this._defaultFocusAsync=null);var t=this._valueToItem(e);t&&t.hasAttribute("disabled")||(this._setFocusedItem(t),Polymer.IronMultiSelectableBehaviorImpl.select.apply(this,arguments))},_resetTabindices:function(){var e=this.multi?this.selectedItems&&this.selectedItems[0]:this.selectedItem;this.items.forEach(function(t){t.setAttribute("tabindex",t===e?"0":"-1")},this)},_updateMultiselectable:function(e){e?this.setAttribute("aria-multiselectable","true"):this.removeAttribute("aria-multiselectable")},_focusWithKeyboardEvent:function(e){for(var t,s=0;t=this.items[s];s++){var i=this.attrForItemTitle||"textContent",o=t[i]||t.getAttribute(i);if(!t.hasAttribute("disabled")&&o&&o.trim().charAt(0).toLowerCase()===String.fromCharCode(e.keyCode).toLowerCase()){this._setFocusedItem(t);break}}},_focusPrevious:function(){for(var e=this.items.length,t=Number(this.indexOf(this.focusedItem)),s=1;e>s;s++){var i=this.items[(t-s+e)%e];if(!i.hasAttribute("disabled"))return void this._setFocusedItem(i)}},_focusNext:function(){for(var e=this.items.length,t=Number(this.indexOf(this.focusedItem)),s=1;e>s;s++){var i=this.items[(t+s)%e];if(!i.hasAttribute("disabled"))return void this._setFocusedItem(i)}},_applySelection:function(e,t){t?e.setAttribute("aria-selected","true"):e.removeAttribute("aria-selected"),Polymer.IronSelectableBehavior._applySelection.apply(this,arguments)},_focusedItemChanged:function(e,t){t&&t.setAttribute("tabindex","-1"),e&&(e.setAttribute("tabindex","0"),e.focus())},_onIronItemsChanged:function(e){e.detail.addedNodes.length&&this._resetTabindices()},_onShiftTabDown:function(e){var t=this.getAttribute("tabindex");Polymer.IronMenuBehaviorImpl._shiftTabPressed=!0,this._setFocusedItem(null),this.setAttribute("tabindex","-1"),this.async(function(){this.setAttribute("tabindex",t),Polymer.IronMenuBehaviorImpl._shiftTabPressed=!1},1)},_onFocus:function(e){if(!Polymer.IronMenuBehaviorImpl._shiftTabPressed){var t=Polymer.dom(e).rootTarget;(t===this||"undefined"==typeof t.tabIndex||this.isLightDescendant(t))&&(this._defaultFocusAsync=this.async(function(){var e=this.multi?this.selectedItems&&this.selectedItems[0]:this.selectedItem;this._setFocusedItem(null),e?this._setFocusedItem(e):this.items[0]&&this._focusNext()}))}},_onUpKey:function(e){this._focusPrevious(),e.detail.keyboardEvent.preventDefault()},_onDownKey:function(e){this._focusNext(),e.detail.keyboardEvent.preventDefault()},_onEscKey:function(e){this.focusedItem.blur()},_onKeydown:function(e){this.keyboardEventMatchesKeys(e,"up down esc")||this._focusWithKeyboardEvent(e),e.stopPropagation()},_activateHandler:function(e){Polymer.IronSelectableBehavior._activateHandler.call(this,e),e.stopPropagation()}},Polymer.IronMenuBehaviorImpl._shiftTabPressed=!1,Polymer.IronMenuBehavior=[Polymer.IronMultiSelectableBehavior,Polymer.IronA11yKeysBehavior,Polymer.IronMenuBehaviorImpl];</script>
 <script>Polymer.NeonAnimatableBehavior={properties:{animationConfig:{type:Object},entryAnimation:{observer:"_entryAnimationChanged",type:String},exitAnimation:{observer:"_exitAnimationChanged",type:String}},_entryAnimationChanged:function(){this.animationConfig=this.animationConfig||{},this.animationConfig.entry=[{name:this.entryAnimation,node:this}]},_exitAnimationChanged:function(){this.animationConfig=this.animationConfig||{},this.animationConfig.exit=[{name:this.exitAnimation,node:this}]},_copyProperties:function(i,n){for(var t in n)i[t]=n[t]},_cloneConfig:function(i){var n={isClone:!0};return this._copyProperties(n,i),n},_getAnimationConfigRecursive:function(i,n,t){if(this.animationConfig){if(this.animationConfig.value&&"function"==typeof this.animationConfig.value)return void this._warn(this._logf("playAnimation","Please put 'animationConfig' inside of your components 'properties' object instead of outside of it."));var o;if(o=i?this.animationConfig[i]:this.animationConfig,Array.isArray(o)||(o=[o]),o)for(var e,a=0;e=o[a];a++)if(e.animatable)e.animatable._getAnimationConfigRecursive(e.type||i,n,t);else if(e.id){var r=n[e.id];r?(r.isClone||(n[e.id]=this._cloneConfig(r),r=n[e.id]),this._copyProperties(r,e)):n[e.id]=e}else t.push(e)}},getAnimationConfig:function(i){var n={},t=[];this._getAnimationConfigRecursive(i,n,t);for(var o in n)t.push(n[o]);return t}};</script>
 <script>Polymer.NeonAnimationRunnerBehaviorImpl={properties:{_player:{type:Object}},_configureAnimationEffects:function(n){var i=[];if(n.length>0)for(var e,t=0;e=n[t];t++){var o=document.createElement(e.name);if(o.isNeonAnimation){var a=o.configure(e);a&&i.push({animation:o,config:e,effect:a})}else console.warn(this.is+":",e.name,"not found!")}return i},_runAnimationEffects:function(n){return document.timeline.play(new GroupEffect(n))},_completeAnimations:function(n){for(var i,e=0;i=n[e];e++)i.animation.complete(i.config)},playAnimation:function(n,i){var e=this.getAnimationConfig(n);if(e){try{var t=this._configureAnimationEffects(e),o=t.map(function(n){return n.effect});if(o.length>0)return this._player=this._runAnimationEffects(o),void(this._player.onfinish=function(){this._completeAnimations(t),this._player&&(this._player.cancel(),this._player=null),this.fire("neon-animation-finish",i,{bubbles:!1})}.bind(this))}catch(a){console.warn("Couldnt play","(",n,e,").",a)}this.fire("neon-animation-finish",i,{bubbles:!1})}},cancelAnimation:function(){this._player&&this._player.cancel()}},Polymer.NeonAnimationRunnerBehavior=[Polymer.NeonAnimatableBehavior,Polymer.NeonAnimationRunnerBehaviorImpl];</script>
@@ -963,9 +997,9 @@ for(n in this._instanceProps)e._addPropertyEffect(n,"function",this._createInsta
                 </app-header>
 
                 <iron-pages role="main" attr-for-selected="route" selected="[[ page ]]">
-                    <snd-sheet-list route="list" sheet-list="{{ sheetList }}"></snd-sheet-list>
+                    <snd-sheet-list route="list" sheet-list="{{ sheetList }}" sheet-detail="{{ sheetDetail }}"></snd-sheet-list>
                     <snd-sheet-create route="create" new-sheet="{{ newSheet }}" base-sheet="{{ baseSheet }}" sheet-list="{{ sheetList }}"></snd-sheet-create>
-                    <snd-sheet-detail route="detail"></snd-sheet-detail>
+                    <snd-sheet-detail route="detail" sheet-detail="{{ sheetDetail }}"></snd-sheet-detail>
                 </iron-pages>
 
             </app-header-layout>
@@ -973,7 +1007,7 @@ for(n in this._instanceProps)e._addPropertyEffect(n,"function",this._createInsta
 
     </template>
 
-    <script>Polymer({is:"snd-app",properties:{page:{type:String,notify:!0,reflectToAttribute:!0,observer:"_pageChanged"}},observers:["_routePageChanged(routeData.page)"],listeners:{requestChangeRoute:"_changeRoute"},attached:function(e){this.importHref(this.resolveUrl("snd-sheet-list.html"),null,null,!0),this.importHref(this.resolveUrl("snd-sheet-create.html"),null,null,!0),this.importHref(this.resolveUrl("snd-sheet-detail.html"),null,null,!0)},_changeRoute:function(e){this.set("route.path",e.detail.route)},_routePageChanged:function(e){this.page=e||"list"},_pageChanged:function(e){this.$.appDrawer.opened&&(this.$.appDrawer.opened=!this.$.appDrawer.opened)}});</script>
+    <script>Polymer({is:"snd-app",properties:{page:{type:String,notify:!0,reflectToAttribute:!0,observer:"_pageChanged"}},observers:["_routePageChanged(routeData.page)"],listeners:{requestChangeRoute:"_changeRoute"},attached:function(e){this.importHref(this.resolveUrl("snd-sheet-list.html"),null,null,!0),this.importHref(this.resolveUrl("snd-sheet-create.html"),null,null,!0),this.importHref(this.resolveUrl("snd-sheet-detail.html"),null,null,!0),"list"!=this.page&&this.set("route.path","/list")},_changeRoute:function(e){this.set("route.path",e.detail.route)},_routePageChanged:function(e){this.page=e||"list"},_pageChanged:function(e){this.$.appDrawer.opened&&(this.$.appDrawer.opened=!this.$.appDrawer.opened)}});</script>
 
 </dom-module>
 </body></html>

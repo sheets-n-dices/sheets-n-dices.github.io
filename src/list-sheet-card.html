@@ -3,7 +3,7 @@
 
 </head><body><dom-module id="list-sheet-card">
     <template>
-        <style>:host{display:block;@apply (--layout-vertical);}paper-card{margin-bottom:16px;}</style>
+        <style>:host{display:block;@apply (--layout-vertical);}paper-card{margin-bottom:16px;}.card-content-row{@apply (--layout-horizontal);@apply (--layout-justified);margin-top:-16px;margin-bottom:-16px;}</style>
 
         <paper-card on-click="_sendRequestDetail">
             <div class="card-content">
@@ -34,5 +34,5 @@
     </template>
 </dom-module>
 
-<script>Polymer({is:"list-sheet-card",properties:{index:{type:Number},name:{type:String},job:{type:String},race:{type:String},level:{type:Number},system:{type:String}},_sendRequestDetail:function(e){}});</script>
+<script>Polymer({is:"list-sheet-card",properties:{index:{type:Number},name:{type:String},job:{type:String},race:{type:String},level:{type:Number},system:{type:String}},_sendRequestDetail:function(e){this.fire("requestDetail",{index:this.index})}});</script>
 </body></html>

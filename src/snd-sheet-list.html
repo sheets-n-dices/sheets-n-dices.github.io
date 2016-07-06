@@ -2,31 +2,11 @@
 
     <template>
 
-        <style>:host{display:block;@apply (--layout-vertical);padding:16px;}paper-card{margin-bottom:16px;}h2{color:var(--secondary-text);}a{position:fixed;bottom:16px;right:16px;}.card-content-row{@apply (--layout-horizontal);@apply (--layout-justified);margin-top:-16px;margin-bottom:-16px;}.emptyList{@apply (--layout-vertical);@apply (--layout-center);}</style>
+        <style>:host{display:block;@apply (--layout-vertical);padding:16px;}h2{color:var(--secondary-text);}a{position:fixed;bottom:16px;right:16px;}.emptyList{@apply (--layout-vertical);@apply (--layout-center);}</style>
 
         <template is="dom-repeat" items="{{ sheetList.list }}">
 
-            <paper-card>
-                <div class="card-content">
-
-                    <div class="card-content-row">
-                        <p>Personagem:</p><p>{{ item.name }}</p>
-                    </div>
-                    <div class="card-content-row">
-                        <p>Level:</p><p>{{ item.level }}</p>
-                    </div>
-                    <div class="card-content-row">
-                        <p>Classe:</p><p>{{ item.job }}</p>
-                    </div>
-                    <div class="card-content-row">
-                        <p>Raça:</p><p>{{ item.race }}</p>
-                    </div>
-                    <div class="card-content-row">
-                        <p>Sistema:</p><p>{{ item.system }}</p>
-                    </div>
-
-                </div>
-            </paper-card>
+            <list-sheet-card index="{{ index }}" name="{{ item.name }}" level="{{ item.level }}" job="{{ item.job }}" race="{{ item.race }}" system="{{ item.system }}"></list-sheet-card>
 
         </template>
 
@@ -44,7 +24,7 @@
 
     </template>
 
-    <script>Polymer({is:"snd-sheet-list",properties:{hasSheet:{type:Boolean,value:!1},sheetList:{type:Object,notify:!0}},observers:["_sheetListUpdate(sheetList.*)"],attached:function(e){Polymer.updateStyles()},_sheetListUpdate:function(e){null==this.sheetList||0==this.sheetList.list.length?this.hasSheet=!1:this.hasSheet=!0}});</script>
+    <script>Polymer({is:"snd-sheet-list",properties:{hasSheet:{type:Boolean,value:!1},sheetList:{type:Object,notify:!0},sheetDetail:{type:Object,notify:!0}},observers:["_sheetListUpdate(sheetList.*)"],listeners:{requestDetail:"_requestDetail"},attached:function(e){Polymer.updateStyles()},_sheetListUpdate:function(e){null==this.sheetList||0==this.sheetList.list.length?this.hasSheet=!1:this.hasSheet=!0},_requestDetail:function(e){this.set("sheetDetail",this.sheetList.list[e.detail.index]),this.fire("requestChangeRoute",{route:"/detail"})}});</script>
 
 </dom-module>
 </body></html>
