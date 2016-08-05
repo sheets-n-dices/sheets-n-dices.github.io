@@ -2,7 +2,19 @@
 
     <template>
 
-        <style>:host{display:block;@apply (--layout-vertical);padding:16px;}paper-fab{position:absolute;bottom:16px;right:16px;}</style>
+        <style>
+            :host {
+                display: block;
+                @apply(--layout-vertical);
+                padding: 16px;
+            }
+
+            paper-fab {
+                position: absolute;
+                bottom: 16px;
+                right: 16px;
+            }
+        </style>
 
         <template is="dom-repeat" items="{{ statusList }}">
 

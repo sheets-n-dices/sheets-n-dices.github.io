@@ -1,1 +1,0 @@
-IntlMessageFormat.__addLocaleData({locale:"kn",pluralRuleFunction:function(e,a){return a?"other":e>=0&&1>=e?"one":"other"}});

@@ -1,1 +1,0 @@
-IntlMessageFormat.__addLocaleData({locale:"kab",pluralRuleFunction:function(a,e){return e?"other":a>=0&&2>a?"one":"other"}});

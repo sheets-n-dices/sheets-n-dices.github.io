@@ -1,8 +1,79 @@
-<html><head><meta charset="UTF-8"><link rel="import" href="snd-app.html"></head><body><dom-module id="snd-sheet-list">
+<html><head><meta charset="UTF-8"><link rel="import" href="snd-app.html"></head><body><div hidden="" by-vulcanize=""><dom-module id="list-sheet-card" assetpath="/">
+    <template>
+        <style>
+			:host {
+				display: block;
+				@apply(--layout-vertical);
+			}
+
+			paper-card {
+				margin-bottom: 16px;
+			}
+
+            .card-content-row {
+                 @apply(--layout-horizontal);
+                 @apply(--layout-justified);
+                 margin-top: -16px;
+                 margin-bottom: -16px;
+            }
+        </style>
+
+        <paper-card on-click="_sendRequestDetail">
+            <div class="card-content">
+
+				<div class="card-content-row">
+                    <p>Name:</p><p>{{ name }}</p>
+                </div>
+
+                <div class="card-content-row">
+                    <p>Class:</p><p>{{ job }}</p>
+                </div>
+
+                <div class="card-content-row">
+                    <p>Race:</p><p>{{ race }}</p>
+                </div>
+
+                <div class="card-content-row">
+                    <p>Level:</p><p>{{ level }}</p>
+                </div>
+
+				<div class="card-content-row">
+                    <p>System:</p><p>{{ system }}</p>
+                </div>
+
+            </div>
+        </paper-card>
+
+    </template>
+</dom-module>
+
+<script>Polymer({is:"list-sheet-card",properties:{index:{type:Number},name:{type:String},job:{type:String},race:{type:String},level:{type:Number},system:{type:String}},_sendRequestDetail:function(e){this.fire("requestDetail",{index:this.index})}});</script>
+</div><dom-module id="snd-sheet-list">
 
     <template>
 
-        <style>:host{display:block;@apply (--layout-vertical);padding:16px;}h2{color:var(--secondary-text);}a{position:fixed;bottom:16px;right:16px;}.emptyList{@apply (--layout-vertical);@apply (--layout-center);}</style>
+        <style>
+            :host {
+                display: block;
+                @apply(--layout-vertical);
+                padding: 16px;
+            }
+
+            h2 {
+                color: var(--secondary-text)
+            }
+
+            a {
+                position: fixed;
+                bottom: 16px;
+                right: 16px;
+            }
+
+            .emptyList {
+                @apply(--layout-vertical);
+                @apply(--layout-center);
+            }
+        </style>
 
         <template is="dom-repeat" items="{{ sheetList.list }}">
 

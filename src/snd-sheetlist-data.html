@@ -1,7 +1,4 @@
-<html><head><link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="../bower_components/iron-localstorage/iron-localstorage.html">
-
-</head><body><dom-module id="snd-sheetlist-data">
+<html><head><meta charset="UTF-8"><link rel="import" href="snd-app.html"></head><body><dom-module id="snd-sheetlist-data">
     <template>
 
 		<iron-localstorage name="SheetsNDicesSheetList" value="{{ sheetList }}" on-iron-localstorage-load-empty="_initializeSheetList"></iron-localstorage>
