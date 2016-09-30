@@ -83,7 +83,7 @@ function parse(e){for(var t,r=[],n=0,o=0,a="";null!=(t=PATH_REGEXP.exec(e));){va
 
 
 /* eslint-disable quotes, comma-spacing */
-var PrecacheConfig = [["/bower_components/linqjs/linq.min.js","87dc63b1336808f6a2b781d242356869"],["/index.html","4cfc5ee26816c2a51353fe3436cc16e3"],["/manifest.json","18775530f3fbc4a667cb64effc2902f1"],["/src/create-basic-tab.html","b5e8be74618c68fdf9202a908fc55993"],["/src/create-defenses-tab.html","ec52241634b107ab60a5737ca13b5118"],["/src/create-dependency-element.html","897f1149f29a3dfd574b6d3a62fbef1f"],["/src/create-resources-tab.html","0439af40d6b13443d2032b0695ed910e"],["/src/create-skills-tab.html","542e61d57aebda1ab4f2fcef502c19c9"],["/src/create-status-card.html","414efd34d9146eea869680ab149fea98"],["/src/create-status-tab.html","03ea39c0f0f09805fede487e23198f19"],["/src/create-statusbased-card.html","86261dd5d063815a7fdd578c7a87c111"],["/src/list-sheet-card.html","f3c04d7338867acec3e7b77a97d579b3"],["/src/snd-app.html","e68de33a195060dff062855a574fa95b"],["/src/snd-newsheet-data.html","d7d250e9df22ce59147728a5a3e506b8"],["/src/snd-sheet-create.html","7576fa6603f6ded3e3e4c08a8ebe9554"],["/src/snd-sheet-detail.html","a8a1b59beba5d0fca5a440aece20af4b"],["/src/snd-sheet-list.html","796322cc38c3952bd68c93cb35ce715f"],["/src/snd-sheetlist-data.html","95646f3db08868be780c78758d86c4f6"]];
+var PrecacheConfig = [["/bower_components/linqjs/linq.min.js","87dc63b1336808f6a2b781d242356869"],["/index.html","4cfc5ee26816c2a51353fe3436cc16e3"],["/manifest.json","18775530f3fbc4a667cb64effc2902f1"],["/src/create-basic-tab.html","b5e8be74618c68fdf9202a908fc55993"],["/src/create-defenses-tab.html","ec52241634b107ab60a5737ca13b5118"],["/src/create-dependency-element.html","897f1149f29a3dfd574b6d3a62fbef1f"],["/src/create-resources-tab.html","0439af40d6b13443d2032b0695ed910e"],["/src/create-skills-tab.html","542e61d57aebda1ab4f2fcef502c19c9"],["/src/create-status-card.html","414efd34d9146eea869680ab149fea98"],["/src/create-status-tab.html","03ea39c0f0f09805fede487e23198f19"],["/src/create-statusbased-card.html","86261dd5d063815a7fdd578c7a87c111"],["/src/list-sheet-card.html","f3c04d7338867acec3e7b77a97d579b3"],["/src/snd-app.html","acc6991d328e7a6e3d73f261b3e02b99"],["/src/snd-newsheet-data.html","d7d250e9df22ce59147728a5a3e506b8"],["/src/snd-sheet-create.html","7576fa6603f6ded3e3e4c08a8ebe9554"],["/src/snd-sheet-detail.html","a8a1b59beba5d0fca5a440aece20af4b"],["/src/snd-sheet-list.html","796322cc38c3952bd68c93cb35ce715f"],["/src/snd-sheetlist-data.html","95646f3db08868be780c78758d86c4f6"]];
 /* eslint-enable quotes, comma-spacing */
 var CacheNamePrefix = 'sw-precache-v1--' + (self.registration ? self.registration.scope : '') + '-';
 
@@ -270,7 +270,7 @@ self.addEventListener('fetch', function(event) {
       cacheName = AbsoluteUrlToCacheName[urlWithoutIgnoredParameters];
     }
 
-    var navigateFallback = '/index.html';
+    var navigateFallback = '/';
     // Ideally, this would check for event.request.mode === 'navigate', but that is not widely
     // supported yet:
     // https://code.google.com/p/chromium/issues/detail?id=540967
