@@ -15,8 +15,6 @@
 
 
 
-
-
 </head><body><div hidden="" by-vulcanize=""><script>!function(){function e(){document.body.removeAttribute("unresolved")}window.WebComponents?addEventListener("WebComponentsReady",e):"interactive"===document.readyState||"complete"===document.readyState?e():addEventListener("DOMContentLoaded",e)}(),window.Polymer={Settings:function(){var e=window.Polymer||{};if(!e.noUrlSettings)for(var t,r=location.search.slice(1).split("&"),i=0;i<r.length&&(t=r[i]);i++)t=t.split("="),t[0]&&(e[t[0]]=t[1]||!0);return e.wantShadow="shadow"===e.dom,e.hasShadow=Boolean(Element.prototype.createShadowRoot),e.nativeShadow=e.hasShadow&&!window.ShadowDOMPolyfill,e.useShadow=e.wantShadow&&e.hasShadow,e.hasNativeImports=Boolean("import"in document.createElement("link")),e.useNativeImports=e.hasNativeImports,e.useNativeCustomElements=!window.CustomElements||window.CustomElements.useNative,e.useNativeShadow=e.useShadow&&e.nativeShadow,e.usePolyfillProto=!e.useNativeCustomElements&&!Object.__proto__,e.hasNativeCSSProperties=!navigator.userAgent.match("AppleWebKit/601")&&window.CSS&&CSS.supports&&CSS.supports("box-shadow","0 0 0 var(--foo)"),e.useNativeCSSProperties=e.hasNativeCSSProperties&&e.lazyRegister&&e.useNativeCSSProperties,e}()},function(){var e=window.Polymer;window.Polymer=function(e){"function"==typeof e&&(e=e.prototype),e||(e={});var r=t(e);e=r.prototype;var i={prototype:e};return e.extends&&(i.extends=e.extends),Polymer.telemetry._registrate(e),document.registerElement(e.is,i),r};var t=function(e){var t=Polymer.Base;return e.extends&&(t=Polymer.Base._getExtendedPrototype(e.extends)),e=Polymer.Base.chainObject(e,t),e.registerCallback(),e.constructor};if(e)for(var r in e)Polymer[r]=e[r];Polymer.Class=t}(),Polymer.telemetry={registrations:[],_regLog:function(e){console.log("["+e.is+"]: registered")},_registrate:function(e){this.registrations.push(e),Polymer.log&&this._regLog(e)},dumpRegistrations:function(){this.registrations.forEach(this._regLog)}},Object.defineProperty(window,"currentImport",{enumerable:!0,configurable:!0,get:function(){return(document._currentScript||document.currentScript).ownerDocument}}),Polymer.RenderStatus={_ready:!1,_callbacks:[],whenReady:function(e){this._ready?e():this._callbacks.push(e)},_makeReady:function(){this._ready=!0;for(var e=0;e<this._callbacks.length;e++)this._callbacks[e]();this._callbacks=[]},_catchFirstRender:function(){requestAnimationFrame(function(){Polymer.RenderStatus._makeReady()})},_afterNextRenderQueue:[],_waitingNextRender:!1,afterNextRender:function(e,t,r){this._watchNextRender(),this._afterNextRenderQueue.push([e,t,r])},hasRendered:function(){return this._ready},_watchNextRender:function(){if(!this._waitingNextRender){this._waitingNextRender=!0;var e=function(){Polymer.RenderStatus._flushNextRender()};this._ready?requestAnimationFrame(e):this.whenReady(e)}},_flushNextRender:function(){var e=this;setTimeout(function(){e._flushRenderCallbacks(e._afterNextRenderQueue),e._afterNextRenderQueue=[],e._waitingNextRender=!1})},_flushRenderCallbacks:function(e){for(var t,r=0;r<e.length;r++)t=e[r],t[1].apply(t[0],t[2]||Polymer.nar)}},window.HTMLImports?HTMLImports.whenReady(function(){Polymer.RenderStatus._catchFirstRender()}):Polymer.RenderStatus._catchFirstRender(),Polymer.ImportStatus=Polymer.RenderStatus,Polymer.ImportStatus.whenLoaded=Polymer.ImportStatus.whenReady,function(){"use strict";var e=Polymer.Settings;Polymer.Base={__isPolymerInstance__:!0,_addFeature:function(e){this.extend(this,e)},registerCallback:function(){"max"===e.lazyRegister?this.beforeRegister&&this.beforeRegister():(this._desugarBehaviors(),this._doBehavior("beforeRegister")),this._registerFeatures(),e.lazyRegister||this.ensureRegisterFinished()},createdCallback:function(){this.__hasRegisterFinished||this._ensureRegisterFinished(this.__proto__),Polymer.telemetry.instanceCount++,this.root=this,this._doBehavior("created"),this._initFeatures()},ensureRegisterFinished:function(){this._ensureRegisterFinished(this)},_ensureRegisterFinished:function(t){t.__hasRegisterFinished===t.is&&t.is||("max"===e.lazyRegister&&(t._desugarBehaviors(),t._doBehaviorOnly("beforeRegister")),t.__hasRegisterFinished=t.is,t._finishRegisterFeatures&&t._finishRegisterFeatures(),t._doBehavior("registered"),e.usePolyfillProto&&t!==this&&t.extend(this,t))},attachedCallback:function(){var e=this;Polymer.RenderStatus.whenReady(function(){e.isAttached=!0,e._doBehavior("attached")})},detachedCallback:function(){var e=this;Polymer.RenderStatus.whenReady(function(){e.isAttached=!1,e._doBehavior("detached")})},attributeChangedCallback:function(e,t,r){this._attributeChangedImpl(e),this._doBehavior("attributeChanged",[e,t,r])},_attributeChangedImpl:function(e){this._setAttributeToProperty(this,e)},extend:function(e,t){if(e&&t)for(var r,i=Object.getOwnPropertyNames(t),o=0;o<i.length&&(r=i[o]);o++)this.copyOwnProperty(r,t,e);return e||t},mixin:function(e,t){for(var r in t)e[r]=t[r];return e},copyOwnProperty:function(e,t,r){var i=Object.getOwnPropertyDescriptor(t,e);i&&Object.defineProperty(r,e,i)},_logger:function(e,t){switch(1===t.length&&Array.isArray(t[0])&&(t=t[0]),e){case"log":case"warn":case"error":console[e].apply(console,t)}},_log:function(){var e=Array.prototype.slice.call(arguments,0);this._logger("log",e)},_warn:function(){var e=Array.prototype.slice.call(arguments,0);this._logger("warn",e)},_error:function(){var e=Array.prototype.slice.call(arguments,0);this._logger("error",e)},_logf:function(){return this._logPrefix.concat(this.is).concat(Array.prototype.slice.call(arguments,0))}},Polymer.Base._logPrefix=function(){var e=window.chrome&&!/edge/i.test(navigator.userAgent)||/firefox/i.test(navigator.userAgent);return e?["%c[%s::%s]:","font-weight: bold; background-color:#EEEE00;"]:["[%s::%s]:"]}(),Polymer.Base.chainObject=function(e,t){return e&&t&&e!==t&&(Object.__proto__||(e=Polymer.Base.extend(Object.create(t),e)),e.__proto__=t),e},Polymer.Base=Polymer.Base.chainObject(Polymer.Base,HTMLElement.prototype),window.CustomElements?Polymer.instanceof=CustomElements.instanceof:Polymer.instanceof=function(e,t){return e instanceof t},Polymer.isInstance=function(e){return Boolean(e&&e.__isPolymerInstance__)},Polymer.telemetry.instanceCount=0}(),function(){function e(){if(s)for(var e,t=document._currentScript||document.currentScript,r=t&&t.ownerDocument||document,i=r.querySelectorAll("dom-module"),o=i.length-1;o>=0&&(e=i[o]);o--){if(e.__upgraded__)return;CustomElements.upgrade(e)}}var t={},r={},i=function(e){return t[e]||r[e.toLowerCase()]},o=function(){return document.createElement("dom-module")};o.prototype=Object.create(HTMLElement.prototype),Polymer.Base.extend(o.prototype,{constructor:o,createdCallback:function(){this.register()},register:function(e){e=e||this.id||this.getAttribute("name")||this.getAttribute("is"),e&&(this.id=e,t[e]=this,r[e.toLowerCase()]=this)},import:function(t,r){if(t){var o=i(t);return o||(e(),o=i(t)),o&&r&&(o=o.querySelector(r)),o}}});var s=window.CustomElements&&!CustomElements.useNative;document.registerElement("dom-module",o)}(),Polymer.Base._addFeature({_prepIs:function(){if(!this.is){var e=(document._currentScript||document.currentScript).parentNode;if("dom-module"===e.localName){var t=e.id||e.getAttribute("name")||e.getAttribute("is");this.is=t}}this.is&&(this.is=this.is.toLowerCase())}}),Polymer.Base._addFeature({behaviors:[],_desugarBehaviors:function(){this.behaviors.length&&(this.behaviors=this._desugarSomeBehaviors(this.behaviors))},_desugarSomeBehaviors:function(e){var t=[];e=this._flattenBehaviorsList(e);for(var r=e.length-1;r>=0;r--){var i=e[r];t.indexOf(i)===-1&&(this._mixinBehavior(i),t.unshift(i))}return t},_flattenBehaviorsList:function(e){for(var t=[],r=0;r<e.length;r++){var i=e[r];i instanceof Array?t=t.concat(this._flattenBehaviorsList(i)):i?t.push(i):this._warn(this._logf("_flattenBehaviorsList","behavior is null, check for missing or 404 import"))}return t},_mixinBehavior:function(e){for(var t,r=Object.getOwnPropertyNames(e),i=0;i<r.length&&(t=r[i]);i++)Polymer.Base._behaviorProperties[t]||this.hasOwnProperty(t)||this.copyOwnProperty(t,e,this)},_prepBehaviors:function(){this._prepFlattenedBehaviors(this.behaviors)},_prepFlattenedBehaviors:function(e){for(var t=0,r=e.length;t<r;t++)this._prepBehavior(e[t]);this._prepBehavior(this)},_doBehavior:function(e,t){for(var r=0;r<this.behaviors.length;r++)this._invokeBehavior(this.behaviors[r],e,t);this._invokeBehavior(this,e,t)},_doBehaviorOnly:function(e,t){for(var r=0;r<this.behaviors.length;r++)this._invokeBehavior(this.behaviors[r],e,t)},_invokeBehavior:function(e,t,r){var i=e[t];i&&i.apply(this,r||Polymer.nar)},_marshalBehaviors:function(){for(var e=0;e<this.behaviors.length;e++)this._marshalBehavior(this.behaviors[e]);this._marshalBehavior(this)}}),Polymer.Base._behaviorProperties={hostAttributes:!0,beforeRegister:!0,registered:!0,properties:!0,observers:!0,listeners:!0,created:!0,attached:!0,detached:!0,attributeChanged:!0,ready:!0},Polymer.Base._addFeature({_getExtendedPrototype:function(e){return this._getExtendedNativePrototype(e)},_nativePrototypes:{},_getExtendedNativePrototype:function(e){var t=this._nativePrototypes[e];if(!t){var r=this.getNativePrototype(e);t=this.extend(Object.create(r),Polymer.Base),this._nativePrototypes[e]=t}return t},getNativePrototype:function(e){return Object.getPrototypeOf(document.createElement(e))}}),Polymer.Base._addFeature({_prepConstructor:function(){this._factoryArgs=this.extends?[this.extends,this.is]:[this.is];var e=function(){return this._factory(arguments)};this.hasOwnProperty("extends")&&(e.extends=this.extends),Object.defineProperty(this,"constructor",{value:e,writable:!0,configurable:!0}),e.prototype=this},_factory:function(e){var t=document.createElement.apply(document,this._factoryArgs);return this.factoryImpl&&this.factoryImpl.apply(t,e),t}}),Polymer.nob=Object.create(null),Polymer.Base._addFeature({properties:{},getPropertyInfo:function(e){var t=this._getPropertyInfo(e,this.properties);if(!t)for(var r=0;r<this.behaviors.length;r++)if(t=this._getPropertyInfo(e,this.behaviors[r].properties))return t;return t||Polymer.nob},_getPropertyInfo:function(e,t){var r=t&&t[e];return"function"==typeof r&&(r=t[e]={type:r}),r&&(r.defined=!0),r},_prepPropertyInfo:function(){this._propertyInfo={};for(var e=0;e<this.behaviors.length;e++)this._addPropertyInfo(this._propertyInfo,this.behaviors[e].properties);this._addPropertyInfo(this._propertyInfo,this.properties),this._addPropertyInfo(this._propertyInfo,this._propertyEffects)},_addPropertyInfo:function(e,t){if(t){var r,i;for(var o in t)r=e[o],i=t[o],("_"!==o[0]||i.readOnly)&&(e[o]?(r.type||(r.type=i.type),r.readOnly||(r.readOnly=i.readOnly)):e[o]={type:"function"==typeof i?i:i.type,readOnly:i.readOnly,attribute:Polymer.CaseMap.camelToDashCase(o)})}}}),Polymer.CaseMap={_caseMap:{},_rx:{dashToCamel:/-[a-z]/g,camelToDash:/([A-Z])/g},dashToCamelCase:function(e){return this._caseMap[e]||(this._caseMap[e]=e.indexOf("-")<0?e:e.replace(this._rx.dashToCamel,function(e){return e[1].toUpperCase()}))},camelToDashCase:function(e){return this._caseMap[e]||(this._caseMap[e]=e.replace(this._rx.camelToDash,"-$1").toLowerCase())}},Polymer.Base._addFeature({_addHostAttributes:function(e){this._aggregatedAttributes||(this._aggregatedAttributes={}),e&&this.mixin(this._aggregatedAttributes,e)},_marshalHostAttributes:function(){this._aggregatedAttributes&&this._applyAttributes(this,this._aggregatedAttributes)},_applyAttributes:function(e,t){for(var r in t)if(!this.hasAttribute(r)&&"class"!==r){var i=t[r];this.serializeValueToAttribute(i,r,this)}},_marshalAttributes:function(){this._takeAttributesToModel(this)},_takeAttributesToModel:function(e){if(this.hasAttributes())for(var t in this._propertyInfo){var r=this._propertyInfo[t];this.hasAttribute(r.attribute)&&this._setAttributeToProperty(e,r.attribute,t,r)}},_setAttributeToProperty:function(e,t,r,i){if(!this._serializing&&(r=r||Polymer.CaseMap.dashToCamelCase(t),i=i||this._propertyInfo&&this._propertyInfo[r],i&&!i.readOnly)){var o=this.getAttribute(t);e[r]=this.deserialize(o,i.type)}},_serializing:!1,reflectPropertyToAttribute:function(e,t,r){this._serializing=!0,r=void 0===r?this[e]:r,this.serializeValueToAttribute(r,t||Polymer.CaseMap.camelToDashCase(e)),this._serializing=!1},serializeValueToAttribute:function(e,t,r){var i=this.serialize(e);r=r||this,void 0===i?r.removeAttribute(t):r.setAttribute(t,i)},deserialize:function(e,t){switch(t){case Number:e=Number(e);break;case Boolean:e=null!=e;break;case Object:try{e=JSON.parse(e)}catch(e){}break;case Array:try{e=JSON.parse(e)}catch(t){e=null,console.warn("Polymer::Attributes: couldn`t decode Array as JSON")}break;case Date:e=new Date(e);break;case String:}return e},serialize:function(e){switch(typeof e){case"boolean":return e?"":void 0;case"object":if(e instanceof Date)return e.toString();if(e)try{return JSON.stringify(e)}catch(e){return""}default:return null!=e?e:void 0}}}),Polymer.version="1.6.1",Polymer.Base._addFeature({_registerFeatures:function(){this._prepIs(),this._prepBehaviors(),this._prepConstructor(),this._prepPropertyInfo()},_prepBehavior:function(e){this._addHostAttributes(e.hostAttributes)},_marshalBehavior:function(e){},_initFeatures:function(){this._marshalHostAttributes(),this._marshalBehaviors()}});</script>
 
 
@@ -1693,75 +1691,7 @@ var r=t.propertyDataFromStyles(n._styles,this),i=!this.__notStyleScopeCacheable;
 </dom-module>
 
 <script>Polymer({is:"snd-sheetlist-data",properties:{sheetList:{type:Object,notify:!0,reflectToAttribute:!0}},_initializeSheetList:function(t){this.sheetList={list:[]}}});</script>
-<dom-module id="snd-basesheet-data" assetpath="/">
-    <template>
-
-		<iron-localstorage name="SheetsNDicesBaseSheet" value="{{ baseSheet }}" on-iron-localstorage-load-empty="_initializeBaseSheet"></iron-localstorage>
-
-    </template>
-</dom-module>
-
-<script>Polymer({is:"snd-basesheet-data",properties:{baseSheet:{type:Object,notify:!0,reflectToAttribute:!0}},_initializeBaseSheet:function(e){this.baseSheet={name:"",job:"",race:"",level:"1",system:"",statusList:[{name:"Str/Dex/Int/...",value:0,baseValue:0,levelModifier:0,persistBonus:0,volatileBonus:0}],resourcesList:[{name:"HP/MP/...",value:0,baseValue:0,statusBase:"None",statusBaseModifier:1,levelModifier:.5,persistBonus:0,volatileBonus:0}],defensesList:[{name:"Armor/Magic Resistence/...",value:0,baseValue:10,statusBase:"None",statusBaseModifier:1,levelModifier:.5,persistBonus:0,volatileBonus:0}],attacksList:[],skillsList:[{name:"Diplomacy/Heal...",value:0,baseValue:10,statusBase:"None",statusBaseModifier:1,levelModifier:.5,persistBonus:0,volatileBonus:0}],equipments:{head:{},chest:{},legs:{},feet:{},hands:{},cloak:{},waist:{},wrist:{},trinkets:{},weapon:{},shield:{}},persistBonusList:[],volatileBonusList:[]}}});</script>
-<dom-module id="snd-newsheet-data" assetpath="/">
-    <template>
-
-		<iron-localstorage name="SheetsNDicesNewSheet" value="{{ newSheet }}" on-iron-localstorage-load-empty="_initializeNewSheet"></iron-localstorage>
-
-    </template>
-</dom-module>
-
-<script>Polymer({is:"snd-newsheet-data",properties:{newSheet:{type:Object,notify:!0,reflectToAttribute:!0}},_initializeNewSheet:function(e){"undefined"!=typeof this.newSheet&&null!=this.newSheet||null==this.baseSheet||(this.newSheet=Object.assign({},this.baseSheet),console.log("Creating Sheet Assigned as Base Sheet"))}});</script>
-<dom-module id="iron-image" assetpath="../bower_components/iron-image/">
-  <template>
-    <style>
-      :host {
-        display: inline-block;
-        overflow: hidden;
-        position: relative;
-      }
-
-      #sizedImgDiv {
-        @apply(--layout-fit);
-
-        display: none;
-      }
-
-      #img {
-        display: block;
-        width: var(--iron-image-width, auto);
-        height: var(--iron-image-height, auto);
-      }
-
-      :host([sizing]) #sizedImgDiv {
-        display: block;
-      }
-
-      :host([sizing]) #img {
-        display: none;
-      }
-
-      #placeholder {
-        @apply(--layout-fit);
-
-        background-color: inherit;
-        opacity: 1;
-
-        @apply(--iron-image-placeholder);
-      }
-
-      #placeholder.faded-out {
-        transition: opacity 0.5s linear;
-        opacity: 0;
-      }
-    </style>
-
-    <div id="sizedImgDiv" role="img" hidden$="[[_computeImgDivHidden(sizing)]]" aria-hidden$="[[_computeImgDivARIAHidden(alt)]]" aria-label$="[[_computeImgDivARIALabel(alt, src)]]"></div>
-    <img id="img" alt$="[[alt]]" hidden$="[[_computeImgHidden(sizing)]]">
-    <div id="placeholder" hidden$="[[_computePlaceholderHidden(preload, fade, loading, loaded)]]" class$="[[_computePlaceholderClassName(preload, fade, loading, loaded)]]"></div>
-  </template>
-
-  <script>Polymer({is:"iron-image",properties:{src:{observer:"_srcChanged",type:String,value:""},alt:{type:String,value:null},preventLoad:{type:Boolean,value:!1,observer:"_preventLoadChanged"},sizing:{type:String,value:null,reflectToAttribute:!0},position:{type:String,value:"center"},preload:{type:Boolean,value:!1},placeholder:{type:String,value:null,observer:"_placeholderChanged"},fade:{type:Boolean,value:!1},loaded:{notify:!0,readOnly:!0,type:Boolean,value:!1},loading:{notify:!0,readOnly:!0,type:Boolean,value:!1},error:{notify:!0,readOnly:!0,type:Boolean,value:!1},width:{observer:"_widthChanged",type:Number,value:null},height:{observer:"_heightChanged",type:Number,value:null}},observers:["_transformChanged(sizing, position)"],ready:function(){var e=this.$.img;e.onload=function(){this.$.img.src===this._resolveSrc(this.src)&&(this._setLoading(!1),this._setLoaded(!0),this._setError(!1))}.bind(this),e.onerror=function(){this.$.img.src===this._resolveSrc(this.src)&&(this._reset(),this._setLoading(!1),this._setLoaded(!1),this._setError(!0))}.bind(this),this._resolvedSrc=""},_load:function(e){e?this.$.img.src=e:this.$.img.removeAttribute("src"),this.$.sizedImgDiv.style.backgroundImage=e?'url("'+e+'")':"",this._setLoading(!!e),this._setLoaded(!1),this._setError(!1)},_reset:function(){this.$.img.removeAttribute("src"),this.$.sizedImgDiv.style.backgroundImage="",this._setLoading(!1),this._setLoaded(!1),this._setError(!1)},_computePlaceholderHidden:function(){return!this.preload||!this.fade&&!this.loading&&this.loaded},_computePlaceholderClassName:function(){return this.preload&&this.fade&&!this.loading&&this.loaded?"faded-out":""},_computeImgDivHidden:function(){return!this.sizing},_computeImgDivARIAHidden:function(){return""===this.alt?"true":void 0},_computeImgDivARIALabel:function(){if(null!==this.alt)return this.alt;if(""===this.src)return"";var e=new URL(this._resolveSrc(this.src)).pathname.split("/");return e[e.length-1]},_computeImgHidden:function(){return!!this.sizing},_widthChanged:function(){this.style.width=isNaN(this.width)?this.width:this.width+"px"},_heightChanged:function(){this.style.height=isNaN(this.height)?this.height:this.height+"px"},_preventLoadChanged:function(){this.preventLoad||this.loaded||(this._reset(),this._load(this.src))},_srcChanged:function(e,t){var i=this._resolveSrc(e);i!==this._resolvedSrc&&(this._resolvedSrc=i,this._reset(),this.preventLoad||this._load(e))},_placeholderChanged:function(){this.$.placeholder.style.backgroundImage=this.placeholder?'url("'+this.placeholder+'")':""},_transformChanged:function(){var e=this.$.sizedImgDiv.style,t=this.$.placeholder.style;e.backgroundSize=t.backgroundSize=this.sizing,e.backgroundPosition=t.backgroundPosition=this.sizing?this.position:"",e.backgroundRepeat=t.backgroundRepeat=this.sizing?"no-repeat":""},_resolveSrc:function(e){return Polymer.ResolveUrl.resolveUrl(e,this.ownerDocument.baseURI)}});</script>
-</dom-module>
+<script>Polymer.PaperButtonBehaviorImpl={properties:{elevation:{type:Number,reflectToAttribute:!0,readOnly:!0}},observers:["_calculateElevation(focused, disabled, active, pressed, receivedFocusFromKeyboard)","_computeKeyboardClass(receivedFocusFromKeyboard)"],hostAttributes:{role:"button",tabindex:"0",animated:!0},_calculateElevation:function(){var e=1;this.disabled?e=0:this.active||this.pressed?e=4:this.receivedFocusFromKeyboard&&(e=3),this._setElevation(e)},_computeKeyboardClass:function(e){this.toggleClass("keyboard-focus",e)},_spaceKeyDownHandler:function(e){Polymer.IronButtonStateImpl._spaceKeyDownHandler.call(this,e),this.hasRipple()&&this.getRipple().ripples.length<1&&this._ripple.uiDownAction()},_spaceKeyUpHandler:function(e){Polymer.IronButtonStateImpl._spaceKeyUpHandler.call(this,e),this.hasRipple()&&this._ripple.uiUpAction()}},Polymer.PaperButtonBehavior=[Polymer.IronButtonState,Polymer.IronControlState,Polymer.PaperRippleBehavior,Polymer.PaperButtonBehaviorImpl];</script>
 <style is="custom-style">
 
   :root {
@@ -1850,6 +1780,130 @@ var r=t.propertyDataFromStyles(n._styles,this),i=!this.__notStyleScopeCacheable;
       }
     </style>
   </template>
+</dom-module>
+<dom-module id="paper-fab" assetpath="../bower_components/paper-fab/">
+  <template strip-whitespace="">
+    <style include="paper-material-shared-styles">
+      :host {
+        @apply(--layout-vertical);
+        @apply(--layout-center-center);
+
+        background: var(--paper-fab-background, --accent-color);
+        border-radius: 50%;
+        box-sizing: border-box;
+        color: var(--text-primary-color);
+        cursor: pointer;
+        height: 56px;
+        min-width: 0;
+        outline: none;
+        padding: 16px;
+        position: relative;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -webkit-user-select: none;
+        user-select: none;
+        width: 56px;
+        z-index: 0;
+
+        /* NOTE: Both values are needed, since some phones require the value `transparent`. */
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+        -webkit-tap-highlight-color: transparent;
+
+        @apply(--paper-fab);
+      }
+
+      [hidden] {
+        display: none !important;
+      }
+
+      :host([mini]) {
+        width: 40px;
+        height: 40px;
+        padding: 8px;
+
+        @apply(--paper-fab-mini);
+      }
+
+      :host([disabled]) {
+        color: var(--paper-fab-disabled-text, --paper-grey-500);
+        background: var(--paper-fab-disabled-background, --paper-grey-300);
+
+        @apply(--paper-fab-disabled);
+      }
+
+      iron-icon {
+        @apply(--paper-fab-iron-icon);
+      }
+
+      span {
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: center;
+      }
+
+      :host(.keyboard-focus) {
+        background: var(--paper-fab-keyboard-focus-background, --paper-pink-900);
+      }
+    </style>
+
+    <iron-icon id="icon" hidden$="{{!_computeIsIconFab(icon, src)}}" src="[[src]]" icon="[[icon]]"></iron-icon>
+    <span hidden$="{{_computeIsIconFab(icon, src)}}">{{label}}</span>
+  </template>
+
+  <script>Polymer({is:"paper-fab",behaviors:[Polymer.PaperButtonBehavior],properties:{src:{type:String,value:""},icon:{type:String,value:""},mini:{type:Boolean,value:!1,reflectToAttribute:!0},label:{type:String,observer:"_labelChanged"}},_labelChanged:function(){this.setAttribute("aria-label",this.label)},_computeIsIconFab:function(e,t){return e.length>0||t.length>0}});</script>
+</dom-module>
+<dom-module id="iron-image" assetpath="../bower_components/iron-image/">
+  <template>
+    <style>
+      :host {
+        display: inline-block;
+        overflow: hidden;
+        position: relative;
+      }
+
+      #sizedImgDiv {
+        @apply(--layout-fit);
+
+        display: none;
+      }
+
+      #img {
+        display: block;
+        width: var(--iron-image-width, auto);
+        height: var(--iron-image-height, auto);
+      }
+
+      :host([sizing]) #sizedImgDiv {
+        display: block;
+      }
+
+      :host([sizing]) #img {
+        display: none;
+      }
+
+      #placeholder {
+        @apply(--layout-fit);
+
+        background-color: inherit;
+        opacity: 1;
+
+        @apply(--iron-image-placeholder);
+      }
+
+      #placeholder.faded-out {
+        transition: opacity 0.5s linear;
+        opacity: 0;
+      }
+    </style>
+
+    <div id="sizedImgDiv" role="img" hidden$="[[_computeImgDivHidden(sizing)]]" aria-hidden$="[[_computeImgDivARIAHidden(alt)]]" aria-label$="[[_computeImgDivARIALabel(alt, src)]]"></div>
+    <img id="img" alt$="[[alt]]" hidden$="[[_computeImgHidden(sizing)]]">
+    <div id="placeholder" hidden$="[[_computePlaceholderHidden(preload, fade, loading, loaded)]]" class$="[[_computePlaceholderClassName(preload, fade, loading, loaded)]]"></div>
+  </template>
+
+  <script>Polymer({is:"iron-image",properties:{src:{observer:"_srcChanged",type:String,value:""},alt:{type:String,value:null},preventLoad:{type:Boolean,value:!1,observer:"_preventLoadChanged"},sizing:{type:String,value:null,reflectToAttribute:!0},position:{type:String,value:"center"},preload:{type:Boolean,value:!1},placeholder:{type:String,value:null,observer:"_placeholderChanged"},fade:{type:Boolean,value:!1},loaded:{notify:!0,readOnly:!0,type:Boolean,value:!1},loading:{notify:!0,readOnly:!0,type:Boolean,value:!1},error:{notify:!0,readOnly:!0,type:Boolean,value:!1},width:{observer:"_widthChanged",type:Number,value:null},height:{observer:"_heightChanged",type:Number,value:null}},observers:["_transformChanged(sizing, position)"],ready:function(){var e=this.$.img;e.onload=function(){this.$.img.src===this._resolveSrc(this.src)&&(this._setLoading(!1),this._setLoaded(!0),this._setError(!1))}.bind(this),e.onerror=function(){this.$.img.src===this._resolveSrc(this.src)&&(this._reset(),this._setLoading(!1),this._setLoaded(!1),this._setError(!0))}.bind(this),this._resolvedSrc=""},_load:function(e){e?this.$.img.src=e:this.$.img.removeAttribute("src"),this.$.sizedImgDiv.style.backgroundImage=e?'url("'+e+'")':"",this._setLoading(!!e),this._setLoaded(!1),this._setError(!1)},_reset:function(){this.$.img.removeAttribute("src"),this.$.sizedImgDiv.style.backgroundImage="",this._setLoading(!1),this._setLoaded(!1),this._setError(!1)},_computePlaceholderHidden:function(){return!this.preload||!this.fade&&!this.loading&&this.loaded},_computePlaceholderClassName:function(){return this.preload&&this.fade&&!this.loading&&this.loaded?"faded-out":""},_computeImgDivHidden:function(){return!this.sizing},_computeImgDivARIAHidden:function(){return""===this.alt?"true":void 0},_computeImgDivARIALabel:function(){if(null!==this.alt)return this.alt;if(""===this.src)return"";var e=new URL(this._resolveSrc(this.src)).pathname.split("/");return e[e.length-1]},_computeImgHidden:function(){return!!this.sizing},_widthChanged:function(){this.style.width=isNaN(this.width)?this.width:this.width+"px"},_heightChanged:function(){this.style.height=isNaN(this.height)?this.height:this.height+"px"},_preventLoadChanged:function(){this.preventLoad||this.loaded||(this._reset(),this._load(this.src))},_srcChanged:function(e,t){var i=this._resolveSrc(e);i!==this._resolvedSrc&&(this._resolvedSrc=i,this._reset(),this.preventLoad||this._load(e))},_placeholderChanged:function(){this.$.placeholder.style.backgroundImage=this.placeholder?'url("'+this.placeholder+'")':""},_transformChanged:function(){var e=this.$.sizedImgDiv.style,t=this.$.placeholder.style;e.backgroundSize=t.backgroundSize=this.sizing,e.backgroundPosition=t.backgroundPosition=this.sizing?this.position:"",e.backgroundRepeat=t.backgroundRepeat=this.sizing?"no-repeat":""},_resolveSrc:function(e){return Polymer.ResolveUrl.resolveUrl(e,this.ownerDocument.baseURI)}});</script>
 </dom-module>
 <dom-module id="paper-material" assetpath="../bower_components/paper-material/">
   <template>
@@ -1941,81 +1995,7 @@ var r=t.propertyDataFromStyles(n._styles,this),i=!this.__notStyleScopeCacheable;
     <content></content>
   </template>
 
-  <script>Polymer({is:"paper-card",properties:{heading:{type:String,value:"",observer:"_headingChanged"},image:{type:String,value:""},alt:{type:String},preloadImage:{type:Boolean,value:!1},fadeImage:{type:Boolean,value:!1},placeholderImage:{type:String,value:null},elevation:{type:Number,value:1,reflectToAttribute:!0},animatedShadow:{type:Boolean,value:!1},animated:{type:Boolean,reflectToAttribute:!0,readOnly:!0,computed:"_computeAnimated(animatedShadow)"}},_headingChanged:function(e){this.getAttribute("aria-label");this.setAttribute("aria-label",e)},_computeHeadingClass:function(e){var t="title-text";return e&&(t+=" over-image"),t},_computeAnimated:function(e){return e}});</script>
-</dom-module>
-<script>Polymer.PaperButtonBehaviorImpl={properties:{elevation:{type:Number,reflectToAttribute:!0,readOnly:!0}},observers:["_calculateElevation(focused, disabled, active, pressed, receivedFocusFromKeyboard)","_computeKeyboardClass(receivedFocusFromKeyboard)"],hostAttributes:{role:"button",tabindex:"0",animated:!0},_calculateElevation:function(){var e=1;this.disabled?e=0:this.active||this.pressed?e=4:this.receivedFocusFromKeyboard&&(e=3),this._setElevation(e)},_computeKeyboardClass:function(e){this.toggleClass("keyboard-focus",e)},_spaceKeyDownHandler:function(e){Polymer.IronButtonStateImpl._spaceKeyDownHandler.call(this,e),this.hasRipple()&&this.getRipple().ripples.length<1&&this._ripple.uiDownAction()},_spaceKeyUpHandler:function(e){Polymer.IronButtonStateImpl._spaceKeyUpHandler.call(this,e),this.hasRipple()&&this._ripple.uiUpAction()}},Polymer.PaperButtonBehavior=[Polymer.IronButtonState,Polymer.IronControlState,Polymer.PaperRippleBehavior,Polymer.PaperButtonBehaviorImpl];</script>
-<dom-module id="paper-fab" assetpath="../bower_components/paper-fab/">
-  <template strip-whitespace="">
-    <style include="paper-material-shared-styles">
-      :host {
-        @apply(--layout-vertical);
-        @apply(--layout-center-center);
-
-        background: var(--paper-fab-background, --accent-color);
-        border-radius: 50%;
-        box-sizing: border-box;
-        color: var(--text-primary-color);
-        cursor: pointer;
-        height: 56px;
-        min-width: 0;
-        outline: none;
-        padding: 16px;
-        position: relative;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        -webkit-user-select: none;
-        user-select: none;
-        width: 56px;
-        z-index: 0;
-
-        /* NOTE: Both values are needed, since some phones require the value `transparent`. */
-        -webkit-tap-highlight-color: rgba(0,0,0,0);
-        -webkit-tap-highlight-color: transparent;
-
-        @apply(--paper-fab);
-      }
-
-      [hidden] {
-        display: none !important;
-      }
-
-      :host([mini]) {
-        width: 40px;
-        height: 40px;
-        padding: 8px;
-
-        @apply(--paper-fab-mini);
-      }
-
-      :host([disabled]) {
-        color: var(--paper-fab-disabled-text, --paper-grey-500);
-        background: var(--paper-fab-disabled-background, --paper-grey-300);
-
-        @apply(--paper-fab-disabled);
-      }
-
-      iron-icon {
-        @apply(--paper-fab-iron-icon);
-      }
-
-      span {
-        width: 100%;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        text-align: center;
-      }
-
-      :host(.keyboard-focus) {
-        background: var(--paper-fab-keyboard-focus-background, --paper-pink-900);
-      }
-    </style>
-
-    <iron-icon id="icon" hidden$="{{!_computeIsIconFab(icon, src)}}" src="[[src]]" icon="[[icon]]"></iron-icon>
-    <span hidden$="{{_computeIsIconFab(icon, src)}}">{{label}}</span>
-  </template>
-
-  <script>Polymer({is:"paper-fab",behaviors:[Polymer.PaperButtonBehavior],properties:{src:{type:String,value:""},icon:{type:String,value:""},mini:{type:Boolean,value:!1,reflectToAttribute:!0},label:{type:String,observer:"_labelChanged"}},_labelChanged:function(){this.setAttribute("aria-label",this.label)},_computeIsIconFab:function(e,t){return e.length>0||t.length>0}});</script>
+  <script>Polymer({is:"paper-card",properties:{heading:{type:String,value:"",observer:"_headingChanged"},image:{type:String,value:""},alt:{type:String},preloadImage:{type:Boolean,value:!1},fadeImage:{type:Boolean,value:!1},placeholderImage:{type:String,value:null},elevation:{type:Number,value:1,reflectToAttribute:!0},animatedShadow:{type:Boolean,value:!1},animated:{type:Boolean,reflectToAttribute:!0,readOnly:!0,computed:"_computeAnimated(animatedShadow)"}},_headingChanged:function(e){this.getAttribute("aria-label"),this.setAttribute("aria-label",e)},_computeHeadingClass:function(e){var t="title-text";return e&&(t+=" over-image"),t},_computeAnimated:function(e){return e}});</script>
 </dom-module>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700,700italic">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,700">
@@ -2414,114 +2394,100 @@ var r=t.propertyDataFromStyles(n._styles,this),i=!this.__notStyleScopeCacheable;
 </dom-module>
 
 <script>Polymer({is:"paper-input-container",properties:{noLabelFloat:{type:Boolean,value:!1},alwaysFloatLabel:{type:Boolean,value:!1},attrForValue:{type:String,value:"bind-value"},autoValidate:{type:Boolean,value:!1},invalid:{observer:"_invalidChanged",type:Boolean,value:!1},focused:{readOnly:!0,type:Boolean,value:!1,notify:!0},_addons:{type:Array},_inputHasContent:{type:Boolean,value:!1},_inputSelector:{type:String,value:"input,textarea,.paper-input-input"},_boundOnFocus:{type:Function,value:function(){return this._onFocus.bind(this)}},_boundOnBlur:{type:Function,value:function(){return this._onBlur.bind(this)}},_boundOnInput:{type:Function,value:function(){return this._onInput.bind(this)}},_boundValueChanged:{type:Function,value:function(){return this._onValueChanged.bind(this)}}},listeners:{"addon-attached":"_onAddonAttached","iron-input-validate":"_onIronInputValidate"},get _valueChangedEvent(){return this.attrForValue+"-changed"},get _propertyForValue(){return Polymer.CaseMap.dashToCamelCase(this.attrForValue)},get _inputElement(){return Polymer.dom(this).querySelector(this._inputSelector)},get _inputElementValue(){return this._inputElement[this._propertyForValue]||this._inputElement.value},ready:function(){this._addons||(this._addons=[]),this.addEventListener("focus",this._boundOnFocus,!0),this.addEventListener("blur",this._boundOnBlur,!0)},attached:function(){this.attrForValue?this._inputElement.addEventListener(this._valueChangedEvent,this._boundValueChanged):this.addEventListener("input",this._onInput),""!=this._inputElementValue?this._handleValueAndAutoValidate(this._inputElement):this._handleValue(this._inputElement)},_onAddonAttached:function(t){this._addons||(this._addons=[]);var n=t.target;this._addons.indexOf(n)===-1&&(this._addons.push(n),this.isAttached&&this._handleValue(this._inputElement))},_onFocus:function(){this._setFocused(!0)},_onBlur:function(){this._setFocused(!1),this._handleValueAndAutoValidate(this._inputElement)},_onInput:function(t){this._handleValueAndAutoValidate(t.target)},_onValueChanged:function(t){this._handleValueAndAutoValidate(t.target)},_handleValue:function(t){var n=this._inputElementValue;n||0===n||"number"===t.type&&!t.checkValidity()?this._inputHasContent=!0:this._inputHasContent=!1,this.updateAddons({inputElement:t,value:n,invalid:this.invalid})},_handleValueAndAutoValidate:function(t){if(this.autoValidate){var n;n=t.validate?t.validate(this._inputElementValue):t.checkValidity(),this.invalid=!n}this._handleValue(t)},_onIronInputValidate:function(t){this.invalid=this._inputElement.invalid},_invalidChanged:function(){this._addons&&this.updateAddons({invalid:this.invalid})},updateAddons:function(t){for(var n,e=0;n=this._addons[e];e++)n.update(t)},_computeInputContentClass:function(t,n,e,i,a){var u="input-content";if(t)a&&(u+=" label-is-hidden");else{var o=this.querySelector("label");n||a?(u+=" label-is-floating",this.$.labelAndInputContainer.style.position="static",i?u+=" is-invalid":e&&(u+=" label-is-highlighted")):o&&(this.$.labelAndInputContainer.style.position="relative")}return u},_computeUnderlineClass:function(t,n){var e="underline";return n?e+=" is-invalid":t&&(e+=" is-highlighted"),e},_computeAddOnContentClass:function(t,n){var e="add-on-content";return n?e+=" is-invalid":t&&(e+=" is-highlighted"),e}});</script>
-<dom-module id="paper-button" assetpath="../bower_components/paper-button/">
-  <template strip-whitespace="">
-    <style include="paper-material-shared-styles">
-      :host {
-        @apply(--layout-inline);
-        @apply(--layout-center-center);
+<script>Polymer.PaperItemBehaviorImpl={hostAttributes:{role:"option",tabindex:"0"}},Polymer.PaperItemBehavior=[Polymer.IronButtonState,Polymer.IronControlState,Polymer.PaperItemBehaviorImpl];</script>
+<dom-module id="paper-item-shared-styles" assetpath="../bower_components/paper-item/">
+  <template>
+    <style>
+      :host, .paper-item {
+        display: block;
         position: relative;
-        box-sizing: border-box;
-        min-width: 5.14em;
-        margin: 0 0.29em;
-        background: transparent;
-        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-        -webkit-tap-highlight-color: transparent;
-        font: inherit;
-        text-transform: uppercase;
-        outline-width: 0;
-        border-radius: 3px;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        -webkit-user-select: none;
-        user-select: none;
-        cursor: pointer;
-        z-index: 0;
-        padding: 0.7em 0.57em;
-
-        @apply(--paper-font-common-base);
-        @apply(--paper-button);
+        min-height: var(--paper-item-min-height, 48px);
+        padding: 0px 16px;
       }
 
-      :host([hidden]) {
+      .paper-item {
+        @apply(--paper-font-subhead);
+        border:none;
+        outline: none;
+        background: white;
+        width: 100%;
+        text-align: left;
+      }
+
+      :host([hidden]), .paper-item[hidden] {
         display: none !important;
       }
 
-      :host([raised].keyboard-focus) {
-        font-weight: bold;
-        @apply(--paper-button-raised-keyboard-focus);
+      :host(.iron-selected), .paper-item.iron-selected {
+        font-weight: var(--paper-item-selected-weight, bold);
+
+        @apply(--paper-item-selected);
       }
 
-      :host(:not([raised]).keyboard-focus) {
-        font-weight: bold;
-        @apply(--paper-button-flat-keyboard-focus);
+      :host([disabled]), .paper-item[disabled] {
+        color: var(--paper-item-disabled-color, --disabled-text-color);
+
+        @apply(--paper-item-disabled);
       }
 
-      :host([disabled]) {
-        background: #eaeaea;
-        color: #a8a8a8;
-        cursor: auto;
+      :host(:focus), .paper-item:focus {
+        position: relative;
+        outline: 0;
+
+        @apply(--paper-item-focused);
+      }
+
+      :host(:focus):before, .paper-item:focus:before {
+        @apply(--layout-fit);
+
+        background: currentColor;
+        content: '';
+        opacity: var(--dark-divider-opacity);
         pointer-events: none;
 
-        @apply(--paper-button-disabled);
+        @apply(--paper-item-focused-before);
       }
+    </style>
+  </template>
+</dom-module>
+<dom-module id="paper-item" assetpath="../bower_components/paper-item/">
+  <template>
+    <style include="paper-item-shared-styles"></style>
+    <style>
+      :host {
+        @apply(--layout-horizontal);
+        @apply(--layout-center);
+        @apply(--paper-font-subhead);
 
-      :host([animated]) {
-        @apply(--shadow-transition);
-      }
-
-      paper-ripple {
-        color: var(--paper-button-ink-color);
+        @apply(--paper-item);
       }
     </style>
 
     <content></content>
   </template>
 
-  <script>Polymer({is:"paper-button",behaviors:[Polymer.PaperButtonBehavior],properties:{raised:{type:Boolean,reflectToAttribute:!0,value:!1,observer:"_calculateElevation"}},_calculateElevation:function(){this.raised?Polymer.PaperButtonBehaviorImpl._calculateElevation.apply(this):this._setElevation(0)}});</script>
+  <script>Polymer({is:"paper-item",behaviors:[Polymer.PaperItemBehavior]});</script>
 </dom-module>
-<dom-module id="create-status-card" assetpath="/">
-    <template>
-        <style>
-            :host {
-                display: block;
-                @apply(--layout-vertical);
-            }
+<script>Polymer.IronMenuBehaviorImpl={properties:{focusedItem:{observer:"_focusedItemChanged",readOnly:!0,type:Object},attrForItemTitle:{type:String}},hostAttributes:{role:"menu",tabindex:"0"},observers:["_updateMultiselectable(multi)"],listeners:{focus:"_onFocus",keydown:"_onKeydown","iron-items-changed":"_onIronItemsChanged"},keyBindings:{up:"_onUpKey",down:"_onDownKey",esc:"_onEscKey","shift+tab:keydown":"_onShiftTabDown"},attached:function(){this._resetTabindices()},select:function(e){this._defaultFocusAsync&&(this.cancelAsync(this._defaultFocusAsync),this._defaultFocusAsync=null);var t=this._valueToItem(e);t&&t.hasAttribute("disabled")||(this._setFocusedItem(t),Polymer.IronMultiSelectableBehaviorImpl.select.apply(this,arguments))},_resetTabindices:function(){var e=this.multi?this.selectedItems&&this.selectedItems[0]:this.selectedItem;this.items.forEach(function(t){t.setAttribute("tabindex",t===e?"0":"-1")},this)},_updateMultiselectable:function(e){e?this.setAttribute("aria-multiselectable","true"):this.removeAttribute("aria-multiselectable")},_focusWithKeyboardEvent:function(e){for(var t,s=0;t=this.items[s];s++){var i=this.attrForItemTitle||"textContent",o=t[i]||t.getAttribute(i);if(!t.hasAttribute("disabled")&&o&&o.trim().charAt(0).toLowerCase()===String.fromCharCode(e.keyCode).toLowerCase()){this._setFocusedItem(t);break}}},_focusPrevious:function(){for(var e=this.items.length,t=Number(this.indexOf(this.focusedItem)),s=1;s<e+1;s++){var i=this.items[(t-s+e)%e];if(!i.hasAttribute("disabled"))return void this._setFocusedItem(i)}},_focusNext:function(){for(var e=this.items.length,t=Number(this.indexOf(this.focusedItem)),s=1;s<e+1;s++){var i=this.items[(t+s)%e];if(!i.hasAttribute("disabled"))return void this._setFocusedItem(i)}},_applySelection:function(e,t){t?e.setAttribute("aria-selected","true"):e.removeAttribute("aria-selected"),Polymer.IronSelectableBehavior._applySelection.apply(this,arguments)},_focusedItemChanged:function(e,t){t&&t.setAttribute("tabindex","-1"),e&&(e.setAttribute("tabindex","0"),e.focus())},_onIronItemsChanged:function(e){e.detail.addedNodes.length&&this._resetTabindices()},_onShiftTabDown:function(e){var t=this.getAttribute("tabindex");Polymer.IronMenuBehaviorImpl._shiftTabPressed=!0,this._setFocusedItem(null),this.setAttribute("tabindex","-1"),this.async(function(){this.setAttribute("tabindex",t),Polymer.IronMenuBehaviorImpl._shiftTabPressed=!1},1)},_onFocus:function(e){if(!Polymer.IronMenuBehaviorImpl._shiftTabPressed){var t=Polymer.dom(e).rootTarget;(t===this||"undefined"==typeof t.tabIndex||this.isLightDescendant(t))&&(this._defaultFocusAsync=this.async(function(){var e=this.multi?this.selectedItems&&this.selectedItems[0]:this.selectedItem;this._setFocusedItem(null),e?this._setFocusedItem(e):this.items[0]&&this._focusNext()}))}},_onUpKey:function(e){this._focusPrevious(),e.detail.keyboardEvent.preventDefault()},_onDownKey:function(e){this._focusNext(),e.detail.keyboardEvent.preventDefault()},_onEscKey:function(e){this.focusedItem.blur()},_onKeydown:function(e){this.keyboardEventMatchesKeys(e,"up down esc")||this._focusWithKeyboardEvent(e),e.stopPropagation()},_activateHandler:function(e){Polymer.IronSelectableBehavior._activateHandler.call(this,e),e.stopPropagation()}},Polymer.IronMenuBehaviorImpl._shiftTabPressed=!1,Polymer.IronMenuBehavior=[Polymer.IronMultiSelectableBehavior,Polymer.IronA11yKeysBehavior,Polymer.IronMenuBehaviorImpl];</script>
+<dom-module id="paper-listbox" assetpath="../bower_components/paper-listbox/">
+  <template>
+    <style>
+      :host {
+        display: block;
+        padding: 8px 0;
 
-            paper-card {
-                margin-bottom: 16px;
-            }
+        background: var(--paper-listbox-background-color, --primary-background-color);
+        color: var(--paper-listbox-color, --primary-text-color);
 
-            .card-actions-button {
-                color: #F44336;
-            }
-        </style>
+        @apply(--paper-listbox);
+      }
+    </style>
 
-        <paper-card>
-            <div class="card-content">
-                <paper-input-container>
-                    <label>Name</label>
-                    <input is="iron-input" bind-value="{{ name }}">
-                </paper-input-container>
+    <content></content>
+  </template>
 
-                <paper-input-container>
-                    <label>Inital Value</label>
-                    <input is="iron-input" bind-value="{{ baseValue }}">
-                </paper-input-container>
-
-                <paper-input-container>
-                    <label>Value Modifier per Level</label>
-                    <input is="iron-input" bind-value="{{ levelModifier }}">
-                </paper-input-container>
-            </div>
-            <div class="card-actions">
-                <paper-button class="card-actions-button" on-click="_requestDeleteStatus">Delete</paper-button>
-            </div>
-        </paper-card>
-    </template>
+  <script>!function(){Polymer({is:"paper-listbox",behaviors:[Polymer.IronMenuBehavior],hostAttributes:{role:"listbox"}})}();</script>
 </dom-module>
-
-<script>Polymer({is:"create-status-card",properties:{index:{type:Number},name:{type:String,notify:!0},baseValue:{type:String,notify:!0},levelModifier:{type:String,notify:!0}},_requestDeleteStatus:function(e){this.fire("requestDeleteStatus",{index:this.index})}});</script>
 <script>Polymer.IronFormElementBehavior={properties:{name:{type:String},value:{notify:!0,type:String},required:{type:Boolean,value:!1},_parentForm:{type:Object}},attached:function(){this.fire("iron-form-element-register")},detached:function(){this._parentForm&&this._parentForm.fire("iron-form-element-unregister",{target:this})}};</script>
 <script>Polymer.IronValidatableBehaviorMeta=null,Polymer.IronValidatableBehavior={properties:{validator:{type:String},invalid:{notify:!0,reflectToAttribute:!0,type:Boolean,value:!1},_validatorMeta:{type:Object},validatorType:{type:String,value:"validator"},_validator:{type:Object,computed:"__computeValidator(validator)"}},observers:["_invalidChanged(invalid)"],registered:function(){Polymer.IronValidatableBehaviorMeta=new Polymer.IronMeta({type:"validator"})},_invalidChanged:function(){this.invalid?this.setAttribute("aria-invalid","true"):this.removeAttribute("aria-invalid")},hasValidator:function(){return null!=this._validator},validate:function(a){return this.invalid=!this._getValidity(a),!this.invalid},_getValidity:function(a){return!this.hasValidator()||this._validator.validate(a)},__computeValidator:function(){return Polymer.IronValidatableBehaviorMeta&&Polymer.IronValidatableBehaviorMeta.byKey(this.validator)}};</script>
 <dom-module id="iron-a11y-announcer" assetpath="../bower_components/iron-a11y-announcer/">
@@ -2716,7 +2682,7 @@ this.currentTarget=t,this.defaultPrevented=!1,this.eventPhase=Event.AT_TARGET,th
 </dom-module>
 <script>Polymer({is:"fade-in-animation",behaviors:[Polymer.NeonAnimationBehavior],configure:function(i){var e=i.node;return this._effect=new KeyframeEffect(e,[{opacity:"0"},{opacity:"1"}],this.timingFromConfig(i)),this._effect}});</script>
 <script>Polymer({is:"fade-out-animation",behaviors:[Polymer.NeonAnimationBehavior],configure:function(e){var i=e.node;return this._effect=new KeyframeEffect(i,[{opacity:"1"},{opacity:"0"}],this.timingFromConfig(e)),this._effect}});</script>
-<script>Polymer({is:"paper-menu-grow-height-animation",behaviors:[Polymer.NeonAnimationBehavior],configure:function(e){var i=e.node,t=i.getBoundingClientRect(),n=t.height;return this._effect=new KeyframeEffect(i,[{height:n/2+"px"},{height:n+"px"}],this.timingFromConfig(e)),this._effect}}),Polymer({is:"paper-menu-grow-width-animation",behaviors:[Polymer.NeonAnimationBehavior],configure:function(e){var i=e.node,t=i.getBoundingClientRect(),n=t.width;return this._effect=new KeyframeEffect(i,[{width:n/2+"px"},{width:n+"px"}],this.timingFromConfig(e)),this._effect}}),Polymer({is:"paper-menu-shrink-width-animation",behaviors:[Polymer.NeonAnimationBehavior],configure:function(e){var i=e.node,t=i.getBoundingClientRect(),n=t.width;return this._effect=new KeyframeEffect(i,[{width:n+"px"},{width:n-n/20+"px"}],this.timingFromConfig(e)),this._effect}}),Polymer({is:"paper-menu-shrink-height-animation",behaviors:[Polymer.NeonAnimationBehavior],configure:function(e){var i=e.node,t=i.getBoundingClientRect(),n=t.height;t.top;return this.setPrefixedProperty(i,"transformOrigin","0 0"),this._effect=new KeyframeEffect(i,[{height:n+"px",transform:"translateY(0)"},{height:n/2+"px",transform:"translateY(-20px)"}],this.timingFromConfig(e)),this._effect}});</script>
+<script>Polymer({is:"paper-menu-grow-height-animation",behaviors:[Polymer.NeonAnimationBehavior],configure:function(e){var i=e.node,t=i.getBoundingClientRect(),n=t.height;return this._effect=new KeyframeEffect(i,[{height:n/2+"px"},{height:n+"px"}],this.timingFromConfig(e)),this._effect}}),Polymer({is:"paper-menu-grow-width-animation",behaviors:[Polymer.NeonAnimationBehavior],configure:function(e){var i=e.node,t=i.getBoundingClientRect(),n=t.width;return this._effect=new KeyframeEffect(i,[{width:n/2+"px"},{width:n+"px"}],this.timingFromConfig(e)),this._effect}}),Polymer({is:"paper-menu-shrink-width-animation",behaviors:[Polymer.NeonAnimationBehavior],configure:function(e){var i=e.node,t=i.getBoundingClientRect(),n=t.width;return this._effect=new KeyframeEffect(i,[{width:n+"px"},{width:n-n/20+"px"}],this.timingFromConfig(e)),this._effect}}),Polymer({is:"paper-menu-shrink-height-animation",behaviors:[Polymer.NeonAnimationBehavior],configure:function(e){var i=e.node,t=i.getBoundingClientRect(),n=t.height;return t.top,this.setPrefixedProperty(i,"transformOrigin","0 0"),this._effect=new KeyframeEffect(i,[{height:n+"px",transform:"translateY(0)"},{height:n/2+"px",transform:"translateY(-20px)"}],this.timingFromConfig(e)),this._effect}});</script>
 
 
 <dom-module id="paper-menu-button" assetpath="../bower_components/paper-menu-button/">
@@ -2870,100 +2836,174 @@ this.currentTarget=t,this.defaultPrevented=!1,this.eventPhase=Event.AT_TARGET,th
 
   <script>!function(){"use strict";Polymer({is:"paper-dropdown-menu",behaviors:[Polymer.IronButtonState,Polymer.IronControlState,Polymer.IronFormElementBehavior,Polymer.IronValidatableBehavior],properties:{selectedItemLabel:{type:String,notify:!0,readOnly:!0},selectedItem:{type:Object,notify:!0,readOnly:!0},value:{type:String,notify:!0,readOnly:!0},label:{type:String},placeholder:{type:String},errorMessage:{type:String},opened:{type:Boolean,notify:!0,value:!1,observer:"_openedChanged"},allowOutsideScroll:{type:Boolean,value:!1},noLabelFloat:{type:Boolean,value:!1,reflectToAttribute:!0},alwaysFloatLabel:{type:Boolean,value:!1},noAnimations:{type:Boolean,value:!1},horizontalAlign:{type:String,value:"right"},verticalAlign:{type:String,value:"top"}},listeners:{tap:"_onTap"},keyBindings:{"up down":"open",esc:"close"},hostAttributes:{role:"combobox","aria-autocomplete":"none","aria-haspopup":"true"},observers:["_selectedItemChanged(selectedItem)"],attached:function(){var e=this.contentElement;e&&e.selectedItem&&this._setSelectedItem(e.selectedItem)},get contentElement(){return Polymer.dom(this.$.content).getDistributedNodes()[0]},open:function(){this.$.menuButton.open()},close:function(){this.$.menuButton.close()},_onIronSelect:function(e){this._setSelectedItem(e.detail.item)},_onIronDeselect:function(e){this._setSelectedItem(null)},_onTap:function(e){Polymer.Gestures.findOriginalTarget(e)===this&&this.open()},_selectedItemChanged:function(e){var t="";t=e?e.label||e.getAttribute("label")||e.textContent.trim():"",this._setValue(t),this._setSelectedItemLabel(t)},_computeMenuVerticalOffset:function(e){return e?-4:8},_getValidity:function(e){return this.disabled||!this.required||this.required&&!!this.value},_openedChanged:function(){var e=this.opened?"true":"false",t=this.contentElement;t&&t.setAttribute("aria-expanded",e)}})}();</script>
 </dom-module>
-<script>Polymer.IronMenuBehaviorImpl={properties:{focusedItem:{observer:"_focusedItemChanged",readOnly:!0,type:Object},attrForItemTitle:{type:String}},hostAttributes:{role:"menu",tabindex:"0"},observers:["_updateMultiselectable(multi)"],listeners:{focus:"_onFocus",keydown:"_onKeydown","iron-items-changed":"_onIronItemsChanged"},keyBindings:{up:"_onUpKey",down:"_onDownKey",esc:"_onEscKey","shift+tab:keydown":"_onShiftTabDown"},attached:function(){this._resetTabindices()},select:function(e){this._defaultFocusAsync&&(this.cancelAsync(this._defaultFocusAsync),this._defaultFocusAsync=null);var t=this._valueToItem(e);t&&t.hasAttribute("disabled")||(this._setFocusedItem(t),Polymer.IronMultiSelectableBehaviorImpl.select.apply(this,arguments))},_resetTabindices:function(){var e=this.multi?this.selectedItems&&this.selectedItems[0]:this.selectedItem;this.items.forEach(function(t){t.setAttribute("tabindex",t===e?"0":"-1")},this)},_updateMultiselectable:function(e){e?this.setAttribute("aria-multiselectable","true"):this.removeAttribute("aria-multiselectable")},_focusWithKeyboardEvent:function(e){for(var t,s=0;t=this.items[s];s++){var i=this.attrForItemTitle||"textContent",o=t[i]||t.getAttribute(i);if(!t.hasAttribute("disabled")&&o&&o.trim().charAt(0).toLowerCase()===String.fromCharCode(e.keyCode).toLowerCase()){this._setFocusedItem(t);break}}},_focusPrevious:function(){for(var e=this.items.length,t=Number(this.indexOf(this.focusedItem)),s=1;s<e+1;s++){var i=this.items[(t-s+e)%e];if(!i.hasAttribute("disabled"))return void this._setFocusedItem(i)}},_focusNext:function(){for(var e=this.items.length,t=Number(this.indexOf(this.focusedItem)),s=1;s<e+1;s++){var i=this.items[(t+s)%e];if(!i.hasAttribute("disabled"))return void this._setFocusedItem(i)}},_applySelection:function(e,t){t?e.setAttribute("aria-selected","true"):e.removeAttribute("aria-selected"),Polymer.IronSelectableBehavior._applySelection.apply(this,arguments)},_focusedItemChanged:function(e,t){t&&t.setAttribute("tabindex","-1"),e&&(e.setAttribute("tabindex","0"),e.focus())},_onIronItemsChanged:function(e){e.detail.addedNodes.length&&this._resetTabindices()},_onShiftTabDown:function(e){var t=this.getAttribute("tabindex");Polymer.IronMenuBehaviorImpl._shiftTabPressed=!0,this._setFocusedItem(null),this.setAttribute("tabindex","-1"),this.async(function(){this.setAttribute("tabindex",t),Polymer.IronMenuBehaviorImpl._shiftTabPressed=!1},1)},_onFocus:function(e){if(!Polymer.IronMenuBehaviorImpl._shiftTabPressed){var t=Polymer.dom(e).rootTarget;(t===this||"undefined"==typeof t.tabIndex||this.isLightDescendant(t))&&(this._defaultFocusAsync=this.async(function(){var e=this.multi?this.selectedItems&&this.selectedItems[0]:this.selectedItem;this._setFocusedItem(null),e?this._setFocusedItem(e):this.items[0]&&this._focusNext()}))}},_onUpKey:function(e){this._focusPrevious(),e.detail.keyboardEvent.preventDefault()},_onDownKey:function(e){this._focusNext(),e.detail.keyboardEvent.preventDefault()},_onEscKey:function(e){this.focusedItem.blur()},_onKeydown:function(e){this.keyboardEventMatchesKeys(e,"up down esc")||this._focusWithKeyboardEvent(e),e.stopPropagation()},_activateHandler:function(e){Polymer.IronSelectableBehavior._activateHandler.call(this,e),e.stopPropagation()}},Polymer.IronMenuBehaviorImpl._shiftTabPressed=!1,Polymer.IronMenuBehavior=[Polymer.IronMultiSelectableBehavior,Polymer.IronA11yKeysBehavior,Polymer.IronMenuBehaviorImpl];</script>
-<dom-module id="paper-listbox" assetpath="../bower_components/paper-listbox/">
-  <template>
-    <style>
+<dom-module id="paper-button" assetpath="../bower_components/paper-button/">
+  <template strip-whitespace="">
+    <style include="paper-material-shared-styles">
       :host {
-        display: block;
-        padding: 8px 0;
-
-        background: var(--paper-listbox-background-color, --primary-background-color);
-        color: var(--paper-listbox-color, --primary-text-color);
-
-        @apply(--paper-listbox);
-      }
-    </style>
-
-    <content></content>
-  </template>
-
-  <script>!function(){Polymer({is:"paper-listbox",behaviors:[Polymer.IronMenuBehavior],hostAttributes:{role:"listbox"}})}();</script>
-</dom-module>
-<script>Polymer.PaperItemBehaviorImpl={hostAttributes:{role:"option",tabindex:"0"}},Polymer.PaperItemBehavior=[Polymer.IronButtonState,Polymer.IronControlState,Polymer.PaperItemBehaviorImpl];</script>
-<dom-module id="paper-item-shared-styles" assetpath="../bower_components/paper-item/">
-  <template>
-    <style>
-      :host, .paper-item {
-        display: block;
+        @apply(--layout-inline);
+        @apply(--layout-center-center);
         position: relative;
-        min-height: var(--paper-item-min-height, 48px);
-        padding: 0px 16px;
+        box-sizing: border-box;
+        min-width: 5.14em;
+        margin: 0 0.29em;
+        background: transparent;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        -webkit-tap-highlight-color: transparent;
+        font: inherit;
+        text-transform: uppercase;
+        outline-width: 0;
+        border-radius: 3px;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -webkit-user-select: none;
+        user-select: none;
+        cursor: pointer;
+        z-index: 0;
+        padding: 0.7em 0.57em;
+
+        @apply(--paper-font-common-base);
+        @apply(--paper-button);
       }
 
-      .paper-item {
-        @apply(--paper-font-subhead);
-        border:none;
-        outline: none;
-        background: white;
-        width: 100%;
-        text-align: left;
-      }
-
-      :host([hidden]), .paper-item[hidden] {
+      :host([hidden]) {
         display: none !important;
       }
 
-      :host(.iron-selected), .paper-item.iron-selected {
-        font-weight: var(--paper-item-selected-weight, bold);
-
-        @apply(--paper-item-selected);
+      :host([raised].keyboard-focus) {
+        font-weight: bold;
+        @apply(--paper-button-raised-keyboard-focus);
       }
 
-      :host([disabled]), .paper-item[disabled] {
-        color: var(--paper-item-disabled-color, --disabled-text-color);
-
-        @apply(--paper-item-disabled);
+      :host(:not([raised]).keyboard-focus) {
+        font-weight: bold;
+        @apply(--paper-button-flat-keyboard-focus);
       }
 
-      :host(:focus), .paper-item:focus {
-        position: relative;
-        outline: 0;
-
-        @apply(--paper-item-focused);
-      }
-
-      :host(:focus):before, .paper-item:focus:before {
-        @apply(--layout-fit);
-
-        background: currentColor;
-        content: '';
-        opacity: var(--dark-divider-opacity);
+      :host([disabled]) {
+        background: #eaeaea;
+        color: #a8a8a8;
+        cursor: auto;
         pointer-events: none;
 
-        @apply(--paper-item-focused-before);
+        @apply(--paper-button-disabled);
       }
-    </style>
-  </template>
-</dom-module>
-<dom-module id="paper-item" assetpath="../bower_components/paper-item/">
-  <template>
-    <style include="paper-item-shared-styles"></style>
-    <style>
-      :host {
-        @apply(--layout-horizontal);
-        @apply(--layout-center);
-        @apply(--paper-font-subhead);
 
-        @apply(--paper-item);
+      :host([animated]) {
+        @apply(--shadow-transition);
+      }
+
+      paper-ripple {
+        color: var(--paper-button-ink-color);
       }
     </style>
 
     <content></content>
   </template>
 
-  <script>Polymer({is:"paper-item",behaviors:[Polymer.PaperItemBehavior]});</script>
+  <script>Polymer({is:"paper-button",behaviors:[Polymer.PaperButtonBehavior],properties:{raised:{type:Boolean,reflectToAttribute:!0,value:!1,observer:"_calculateElevation"}},_calculateElevation:function(){this.raised?Polymer.PaperButtonBehaviorImpl._calculateElevation.apply(this):this._setElevation(0)}});</script>
 </dom-module>
+<dom-module id="create-dependency-element" assetpath="/">
+    <template>
+        <style>
+            :host {
+                display: block;
+                position: relative;
+                width: 100%;
+                @apply(--layout-horizontal);
+            }
+
+            .dependency-name {
+                margin: 0 8px;
+            }
+
+            .dependency-remove-button {
+                min-width: 40px;
+                color: #F44336;
+                @apply(--layout-self-end);
+            }
+        </style>
+
+        <paper-dropdown-menu label="Type" class="dependency-location">
+            <paper-listbox class="dropdown-content" attr-for-selected="dependency-location" selected="{{ dependencyLocation }}" on-iron-select="_dependencyLocationChanged">
+                <paper-item dependency-location="None">None</paper-item>
+                <paper-item dependency-location="statusList">Status</paper-item>
+                <paper-item dependency-location="resourcesList">Resource</paper-item>
+                <paper-item dependency-location="defensesList">Defense</paper-item>
+                <paper-item dependency-location="skillsList">Skill</paper-item>
+            </paper-listbox>
+        </paper-dropdown-menu>
+
+        <paper-dropdown-menu label="Modifier" class="dependency-name">
+            <paper-listbox id="dependencyNameDropdown" class="dropdown-content dependency-name-dropdown" attr-for-selected="modifier-name" selected="{{ dependencyName }}">
+                <template id="dependencyNameList" is="dom-repeat" items="{{ modifierNameList }}">
+                    <paper-item modifier-name="{{ item.name }}">{{ item.name }}</paper-item>
+                </template>
+            </paper-listbox>
+        </paper-dropdown-menu>
+
+        <paper-input-container class="dependency-value">
+            <label>Value</label>
+            <input is="iron-input" bind-value="{{ dependencyValue }}">
+        </paper-input-container>
+
+        <paper-icon-button class="dependency-remove-button" icon="remove" on-click="_requestDeleteDependency"></paper-icon-button>
+    </template>
+</dom-module>
+
+<script>Polymer({is:"create-dependency-element",properties:{index:{type:Number},dependencyLocation:{type:String,notify:!0},dependencyName:{type:String,notify:!0},dependencyValue:{type:String,notify:!0},statusList:{type:Array},resourcesList:{type:Array},defensesList:{type:Array},skillsList:{type:Array}},_dependencyLocationChanged:function(e){this.set("modifierNameList",Object.assign([],this[this.dependencyLocation])),this.$.dependencyNameDropdown.selected=null,this.$.dependencyNameList.render()},_requestDeleteDependency:function(e){this.fire("requestDeleteDependency",{index:this.index})}});</script>
+<dom-module id="create-status-card" assetpath="/">
+    <template>
+        <style>
+            :host {
+                display: block;
+                @apply(--layout-vertical);
+            }
+
+            paper-card {
+                margin-bottom: 16px;
+            }
+
+            .dependency-add-button {
+                margin: 8px 0 0 0;
+                color: var(--secondary-color);
+            }
+
+            .card-actions-button {
+                color: #F44336;
+            }
+        </style>
+
+        <paper-card>
+            <div class="card-content">
+                <paper-input-container>
+                    <label>Name</label>
+                    <input is="iron-input" bind-value="{{ name }}">
+                </paper-input-container>
+
+                <paper-input-container>
+                    <label>Inital Value</label>
+                    <input is="iron-input" bind-value="{{ baseValue }}">
+                </paper-input-container>
+
+                <paper-input-container>
+                    <label>Value Modifier per Level</label>
+                    <input is="iron-input" bind-value="{{ levelModifier }}">
+                </paper-input-container>
+
+                <template is="dom-repeat" items="{{ dependencyList }}">
+                    <create-dependency-element dependency-location="{{ item.location }}" dependency-value="{{ item.value }}" dependency-name="{{ item.name }}" resources-list="[[ resourcesList ]]" defenses-list="[[ defensesList ]]" status-list="[[ statusList ]]" skills-list="[[ skillsList ]]"></create-dependency-element>
+                </template>
+
+                <paper-button class="dependency-add-button" on-click="_addDependency">Add Dependency</paper-button>
+            </div>
+            <div class="card-actions">
+                <paper-button class="card-actions-button" on-click="_requestDeleteStatus">Delete</paper-button>
+            </div>
+        </paper-card>
+    </template>
+</dom-module>
+
+<script>Polymer({is:"create-status-card",properties:{index:{type:Number},name:{type:String,notify:!0},baseValue:{type:String,notify:!0},levelModifier:{type:String,notify:!0},dependencyList:{type:Array,notify:!0},statusList:{type:Array},resourcesList:{type:Array},defensesList:{type:Array},skillsList:{type:Array}},listeners:{requestDeleteDependency:"_deleteDependency"},_addDependency:function(e){function t(){this.location="None",this.name="None",this.modifier=0}this.push("dependencyList",new t)},_deleteDependency:function(e){this.splice("dependencyList",e.detail.index,1)},_requestDeleteStatus:function(e){this.fire("requestDeleteStatus",{index:this.index})}});</script>
 <dom-module id="create-statusbased-card" assetpath="/">
     <template>
         <style>
@@ -2972,12 +3012,13 @@ this.currentTarget=t,this.defaultPrevented=!1,this.eventPhase=Event.AT_TARGET,th
                 @apply(--layout-vertical);
             }
 
-            paper-dropdown-menu {
-                width: 100%;
-            }
-
             paper-card {
                 margin-bottom: 16px;
+            }
+
+            .dependency-add-button {
+                margin: 8px 0 0 0;
+                color: var(--secondary-color);
             }
 
             .card-actions-button {
@@ -2997,24 +3038,16 @@ this.currentTarget=t,this.defaultPrevented=!1,this.eventPhase=Event.AT_TARGET,th
 					<input is="iron-input" bind-value="{{ baseValue }}">
 				</paper-input-container>
 
-				<paper-dropdown-menu label="Status Modificador">
-					<paper-listbox class="dropdown-content" attr-for-selected="status-name" selected="{{ statusBase }}">
-						<paper-item status-name="None">None</paper-item>
-						<template is="dom-repeat" items="{{ statusList }}">
-							<paper-item status-name="{{ item.name }}">{{ item.name }}</paper-item>
-						</template>
-					</paper-listbox>
-				</paper-dropdown-menu>
-
-				<paper-input-container>
-					<label>Value Modifier per Status Point</label>
-					<input is="iron-input" bind-value="{{ statusBaseModifier }}">
-				</paper-input-container>
-
 				<paper-input-container>
 					<label>Value Modifier per Level</label>
 					<input is="iron-input" bind-value="{{ levelModifier }}">
 				</paper-input-container>
+
+                <template is="dom-repeat" items="{{ dependencyList }}">
+                    <create-dependency-element dependency-location="{{ item.location }}" dependency-value="{{ item.value }}" dependency-name="{{ item.name }}" resources-list="[[ resourcesList ]]" defenses-list="[[ defensesList ]]" status-list="[[ statusList ]]" skills-list="[[ skillsList ]]"></create-dependency-element>
+                </template>
+
+                <paper-button class="dependency-add-button" on-click="_addDependency">Add Dependency</paper-button>
 			</div>
             <div class="card-actions">
                 <paper-button class="card-actions-button" on-click="_requestDeleteCard">Delete</paper-button>
@@ -3023,7 +3056,7 @@ this.currentTarget=t,this.defaultPrevented=!1,this.eventPhase=Event.AT_TARGET,th
     </template>
 </dom-module>
 
-<script>Polymer({is:"create-statusbased-card",properties:{index:{type:Number},name:{type:String,notify:!0},baseValue:{type:String,notify:!0},statusBase:{type:String,value:"None",notify:!0},statusBaseModifier:{type:String,notify:!0},levelModifier:{type:String,notify:!0},statusList:{type:Array}},_requestDeleteCard:function(e){this.fire("requestDeleteCard",{index:this.index})}});</script>
+<script>Polymer({is:"create-statusbased-card",properties:{index:{type:Number},name:{type:String,notify:!0},baseValue:{type:String,notify:!0},levelModifier:{type:String,notify:!0},dependencyList:{type:Array,notify:!0},statusList:{type:Array},resourcesList:{type:Array},defensesList:{type:Array},skillsList:{type:Array}},listeners:{requestDeleteDependency:"_deleteDependency"},_addDependency:function(e){function t(){this.location="None",this.name="None",this.modifier=0}this.push("dependencyList",new t)},_deleteDependency:function(e){this.splice("dependencyList",e.detail.index,1)},_requestDeleteCard:function(e){this.fire("requestDeleteCard",{index:this.index})}});</script>
 </div><dom-module id="snd-app">
 
     <template>
@@ -3093,8 +3126,6 @@ this.currentTarget=t,this.defaultPrevented=!1,this.eventPhase=Event.AT_TARGET,th
         <app-route route="{{ route }}" pattern="/:page" data="{{ routeData }}" tail="{{ subroute }}"></app-route>
 
         <snd-sheetlist-data sheet-list="{{ sheetList }}"></snd-sheetlist-data>
-        <snd-basesheet-data base-sheet="{{ baseSheet }}"></snd-basesheet-data>
-        <snd-newsheet-data new-sheet="{{ newSheet }}" base-sheet="{{ baseSheet }}"></snd-newsheet-data>
 
         <app-drawer-layout fullbleed="" force-narrow="">
             
@@ -3118,7 +3149,7 @@ this.currentTarget=t,this.defaultPrevented=!1,this.eventPhase=Event.AT_TARGET,th
 
                 <iron-pages role="main" attr-for-selected="route" selected="[[ page ]]">
                     <snd-sheet-list route="list" sheet-list="{{ sheetList }}" sheet-detail="{{ sheetDetail }}"></snd-sheet-list>
-                    <snd-sheet-create route="create" new-sheet="{{ newSheet }}" base-sheet="{{ baseSheet }}" sheet-list="{{ sheetList }}"></snd-sheet-create>
+                    <snd-sheet-create route="create" sheet-list="{{ sheetList }}"></snd-sheet-create>
                     <snd-sheet-detail route="detail" sheet-detail="{{ sheetDetail }}"></snd-sheet-detail>
                 </iron-pages>
 

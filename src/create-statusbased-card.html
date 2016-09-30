@@ -6,12 +6,13 @@
                 @apply(--layout-vertical);
             }
 
-            paper-dropdown-menu {
-                width: 100%;
-            }
-
             paper-card {
                 margin-bottom: 16px;
+            }
+
+            .dependency-add-button {
+                margin: 8px 0 0 0;
+                color: var(--secondary-color);
             }
 
             .card-actions-button {
@@ -31,24 +32,16 @@
 					<input is="iron-input" bind-value="{{ baseValue }}">
 				</paper-input-container>
 
-				<paper-dropdown-menu label="Status Modificador">
-					<paper-listbox class="dropdown-content" attr-for-selected="status-name" selected="{{ statusBase }}">
-						<paper-item status-name="None">None</paper-item>
-						<template is="dom-repeat" items="{{ statusList }}">
-							<paper-item status-name="{{ item.name }}">{{ item.name }}</paper-item>
-						</template>
-					</paper-listbox>
-				</paper-dropdown-menu>
-
-				<paper-input-container>
-					<label>Value Modifier per Status Point</label>
-					<input is="iron-input" bind-value="{{ statusBaseModifier }}">
-				</paper-input-container>
-
 				<paper-input-container>
 					<label>Value Modifier per Level</label>
 					<input is="iron-input" bind-value="{{ levelModifier }}">
 				</paper-input-container>
+
+                <template is="dom-repeat" items="{{ dependencyList }}">
+                    <create-dependency-element dependency-location="{{ item.location }}" dependency-value="{{ item.value }}" dependency-name="{{ item.name }}" resources-list="[[ resourcesList ]]" defenses-list="[[ defensesList ]]" status-list="[[ statusList ]]" skills-list="[[ skillsList ]]"></create-dependency-element>
+                </template>
+
+                <paper-button class="dependency-add-button" on-click="_addDependency">Add Dependency</paper-button>
 			</div>
             <div class="card-actions">
                 <paper-button class="card-actions-button" on-click="_requestDeleteCard">Delete</paper-button>
@@ -57,5 +50,5 @@
     </template>
 </dom-module>
 
-<script>Polymer({is:"create-statusbased-card",properties:{index:{type:Number},name:{type:String,notify:!0},baseValue:{type:String,notify:!0},statusBase:{type:String,value:"None",notify:!0},statusBaseModifier:{type:String,notify:!0},levelModifier:{type:String,notify:!0},statusList:{type:Array}},_requestDeleteCard:function(e){this.fire("requestDeleteCard",{index:this.index})}});</script>
+<script>Polymer({is:"create-statusbased-card",properties:{index:{type:Number},name:{type:String,notify:!0},baseValue:{type:String,notify:!0},levelModifier:{type:String,notify:!0},dependencyList:{type:Array,notify:!0},statusList:{type:Array},resourcesList:{type:Array},defensesList:{type:Array},skillsList:{type:Array}},listeners:{requestDeleteDependency:"_deleteDependency"},_addDependency:function(e){function t(){this.location="None",this.name="None",this.modifier=0}this.push("dependencyList",new t)},_deleteDependency:function(e){this.splice("dependencyList",e.detail.index,1)},_requestDeleteCard:function(e){this.fire("requestDeleteCard",{index:this.index})}});</script>
 </body></html>

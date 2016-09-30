@@ -10,6 +10,11 @@
                 margin-bottom: 16px;
             }
 
+            .dependency-add-button {
+                margin: 8px 0 0 0;
+                color: var(--secondary-color);
+            }
+
             .card-actions-button {
                 color: #F44336;
             }
@@ -31,6 +36,12 @@
                     <label>Value Modifier per Level</label>
                     <input is="iron-input" bind-value="{{ levelModifier }}">
                 </paper-input-container>
+
+                <template is="dom-repeat" items="{{ dependencyList }}">
+                    <create-dependency-element dependency-location="{{ item.location }}" dependency-value="{{ item.value }}" dependency-name="{{ item.name }}" resources-list="[[ resourcesList ]]" defenses-list="[[ defensesList ]]" status-list="[[ statusList ]]" skills-list="[[ skillsList ]]"></create-dependency-element>
+                </template>
+
+                <paper-button class="dependency-add-button" on-click="_addDependency">Add Dependency</paper-button>
             </div>
             <div class="card-actions">
                 <paper-button class="card-actions-button" on-click="_requestDeleteStatus">Delete</paper-button>
@@ -39,5 +50,5 @@
     </template>
 </dom-module>
 
-<script>Polymer({is:"create-status-card",properties:{index:{type:Number},name:{type:String,notify:!0},baseValue:{type:String,notify:!0},levelModifier:{type:String,notify:!0}},_requestDeleteStatus:function(e){this.fire("requestDeleteStatus",{index:this.index})}});</script>
+<script>Polymer({is:"create-status-card",properties:{index:{type:Number},name:{type:String,notify:!0},baseValue:{type:String,notify:!0},levelModifier:{type:String,notify:!0},dependencyList:{type:Array,notify:!0},statusList:{type:Array},resourcesList:{type:Array},defensesList:{type:Array},skillsList:{type:Array}},listeners:{requestDeleteDependency:"_deleteDependency"},_addDependency:function(e){function t(){this.location="None",this.name="None",this.modifier=0}this.push("dependencyList",new t)},_deleteDependency:function(e){this.splice("dependencyList",e.detail.index,1)},_requestDeleteStatus:function(e){this.fire("requestDeleteStatus",{index:this.index})}});</script>
 </body></html>

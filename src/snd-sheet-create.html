@@ -265,13 +265,22 @@
 </dom-module>
 
 <script>!function(){Polymer({is:"paper-dialog",behaviors:[Polymer.PaperDialogBehavior,Polymer.NeonAnimationRunnerBehavior],listeners:{"neon-animation-finish":"_onNeonAnimationFinish"},_renderOpened:function(){this.cancelAnimation(),this.playAnimation("entry")},_renderClosed:function(){this.cancelAnimation(),this.playAnimation("exit")},_onNeonAnimationFinish:function(){this.opened?this._finishRenderOpened():this._finishRenderClosed()}})}();</script>
+<dom-module id="snd-newsheet-data" assetpath="/">
+    <template>
+
+		<iron-localstorage name="SheetsNDicesNewSheet" value="{{ newSheet }}" on-iron-localstorage-load-empty="_initializeNewSheet"></iron-localstorage>
+
+    </template>
+</dom-module>
+
+<script>Polymer({is:"snd-newsheet-data",properties:{newSheet:{type:Object,notify:!0}},sheetBaseContructor:function(){function e(){this.name="",this.job="",this.race="",this.level="1",this.system="",this.statusList=[new s],this.resourcesList=[new i("HP")],this.defensesList=[new i("Armor")],this.skillsList=[new i("Diplomacy")],this.persistBonusList=[],this.volatileBonusList=[]}function t(){this.location="None",this.name="None",this.modifier=0}function s(){this.name="Strength",this.value=0,this.baseValue=0,this.minimumModifierValue=10,this.levelModifier=0,this.persistBonus=0,this.volatileBonus=0,this.dependencyList=[new t]}function i(e){this.name=e,this.value=0,this.baseValue=0,this.levelModifier=.5,this.persistBonus=0,this.volatileBonus=0,this.dependencyList=[new t]}return new e},_initializeNewSheet:function(e){this.newSheet||(this.set("newSheet",this.sheetBaseContructor()),console.log("Creating Sheet Assigned as Base Sheet"))}});</script>
 <dom-module id="create-basic-tab" assetpath="/">
     <template>
         <style>
             :host {
                 display: block;
-                height: calc(100% - 16px);
-                padding: 8px;
+                height: calc(100% - 32px);
+                padding: 16px 0;
                 @apply(--layout-vertical);
             }
         </style>
@@ -321,7 +330,7 @@
             :host {
                 display: block;
                 @apply(--layout-vertical);
-                padding: 16px;
+                padding: 16px 0;
             }
 
             paper-fab {
@@ -333,7 +342,7 @@
 
         <template is="dom-repeat" items="{{ statusList }}">
 
-            <create-status-card index="{{ index }}" name="{{ item.name }}" base-value="{{ item.baseValue }}" level-modifier="{{ item.levelModifier }}"></create-status-card>
+            <create-status-card index="{{ index }}" name="{{ item.name }}" base-value="{{ item.baseValue }}" level-modifier="{{ item.levelModifier }}" dependency-list="{{ item.dependencyList }}" status-list="[[ statusList ]]" resources-list="[[ resourcesList ]]" defenses-list="[[ defensesList ]]" skills-list="[[ skillsList ]]"></create-status-card>
 
         </template>
 
@@ -343,15 +352,16 @@
 
 </dom-module>
 
-<script>Polymer({is:"create-status-tab",properties:{statusList:{type:Array,notify:!0}},listeners:{requestDeleteStatus:"_deleteStatus"},_newStatus:function(t){this.push("statusList",{name:"Str/Dex/Int/...",value:0,baseValue:0,levelModifier:0,persistBonus:0,volatileBonus:0})},_deleteStatus:function(t){this.splice("statusList",t.detail.index,1)}});</script>
+<script>Polymer({is:"create-status-tab",properties:{statusList:{type:Array,notify:!0},resourcesList:{type:Array},defensesList:{type:Array},skillsList:{type:Array}},listeners:{requestDeleteStatus:"_deleteStatus"},_newStatus:function(t){function e(){this.location="None",this.name="None",this.modifier=0}function s(){this.name="Strength",this.value=0,this.baseValue=0,this.minimumModifierValue=10,this.levelModifier=0,this.persistBonus=0,this.volatileBonus=0,this.dependencyList=[new e]}this.push("statusList",new s)},_deleteStatus:function(t){this.splice("statusList",t.detail.index,1)}});</script>
 <dom-module id="create-resources-tab" assetpath="/">
+
     <template>
 
         <style>
             :host {
                 display: block;
                 @apply(--layout-vertical);
-                padding: 16px;
+                padding: 16px 0;
             }
 
             paper-fab {
@@ -363,24 +373,26 @@
 
         <template is="dom-repeat" items="{{ resourcesList }}">
 
-            <create-statusbased-card index="{{ index }}" name="{{ item.name }}" base-value="{{ item.baseValue }}" status-base="{{ item.statusBase }}" status-base-modifier="{{ item.statusBaseModifier }}" level-modifier="{{ item.levelModifier }}" status-list="[[ statusList ]]"></create-statusbased-card>
+            <create-statusbased-card index="{{ index }}" name="{{ item.name }}" base-value="{{ item.baseValue }}" level-modifier="{{ item.levelModifier }}" dependency-list="{{ item.dependencyList }}" status-list="[[ statusList ]]" resources-list="[[ resourcesList ]]" defenses-list="[[ defensesList ]]" skills-list="[[ skillsList ]]"></create-statusbased-card>
 
         </template>
 
         <paper-fab icon="add" on-click="_newResources"></paper-fab>
 
     </template>
+    
 </dom-module>
 
-<script>Polymer({is:"create-resources-tab",properties:{resourcesList:{type:Array,notify:!0},statusList:{type:Array}},listeners:{requestDeleteCard:"_deleteResources"},_newResources:function(e){this.push("resourcesList",{name:"HP/MP/...",value:0,baseValue:0,statusBase:"None",statusBaseModifier:1,levelModifier:.5,persistBonus:0,volatileBonus:0})},_deleteResources:function(e){this.splice("resourcesList",e.detail.index,1)}});</script>
+<script>Polymer({is:"create-resources-tab",properties:{statusList:{type:Array},resourcesList:{type:Array,notify:!0},defensesList:{type:Array},skillsList:{type:Array}},listeners:{requestDeleteCard:"_deleteResources"},_newResources:function(e){function s(){this.location="None",this.name="None",this.modifier=0}function t(e){this.name=e,this.value=0,this.baseValue=0,this.levelModifier=.5,this.persistBonus=0,this.volatileBonus=0,this.dependencyList=[new s]}this.push("resourcesList",new t("HP"))},_deleteResources:function(e){this.splice("resourcesList",e.detail.index,1)}});</script>
 <dom-module id="create-defenses-tab" assetpath="/">
+
     <template>
 
         <style>
             :host {
                 display: block;
                 @apply(--layout-vertical);
-                padding: 16px;
+                padding: 16px 0;
             }
 
             paper-fab {
@@ -392,24 +404,26 @@
 
         <template is="dom-repeat" items="{{ defensesList }}">
 
-            <create-statusbased-card index="{{ index }}" name="{{ item.name }}" base-value="{{ item.baseValue }}" status-base="{{ item.statusBase }}" status-base-modifier="{{ item.statusBaseModifier }}" level-modifier="{{ item.levelModifier }}" status-list="[[ statusList ]]"></create-statusbased-card>
+            <create-statusbased-card index="{{ index }}" name="{{ item.name }}" base-value="{{ item.baseValue }}" level-modifier="{{ item.levelModifier }}" dependency-list="{{ item.dependencyList }}" status-list="[[ statusList ]]" resources-list="[[ resourcesList ]]" defenses-list="[[ defensesList ]]" skills-list="[[ skillsList ]]"></create-statusbased-card>
 
         </template>
 
         <paper-fab icon="add" on-click="_newDefenses"></paper-fab>
 
     </template>
+    
 </dom-module>
 
-<script>Polymer({is:"create-defenses-tab",properties:{defensesList:{type:Array,notify:!0},statusList:{type:Array}},listeners:{requestDeleteCard:"_deleteDefenses"},_newDefenses:function(e){this.push("defensesList",{name:"Armor/Magic Resistence/...",value:0,baseValue:0,statusBase:"None",statusBaseModifier:1,levelModifier:.5,persistBonus:0,volatileBonus:0})},_deleteDefenses:function(e){this.splice("defensesList",e.detail.index,1)}});</script>
+<script>Polymer({is:"create-defenses-tab",properties:{statusList:{type:Array},resourcesList:{type:Array},defensesList:{type:Array,notify:!0},skillsList:{type:Array}},listeners:{requestDeleteCard:"_deleteDefenses"},_newDefenses:function(e){function s(){this.location="None",this.name="None",this.modifier=0}function t(e){this.name=e,this.value=0,this.baseValue=0,this.levelModifier=.5,this.persistBonus=0,this.volatileBonus=0,this.dependencyList=[new s]}this.push("defensesList",new t("Armor"))},_deleteDefenses:function(e){this.splice("defensesList",e.detail.index,1)}});</script>
 <dom-module id="create-skills-tab" assetpath="/">
+
     <template>
 
         <style>
             :host {
                 display: block;
                 @apply(--layout-vertical);
-                padding: 16px;
+                padding: 16px 0;
             }
 
             paper-fab {
@@ -421,16 +435,17 @@
 
         <template is="dom-repeat" items="{{ skillsList }}">
 
-            <create-statusbased-card index="{{ index }}" name="{{ item.name }}" base-value="{{ item.baseValue }}" status-base="{{ item.statusBase }}" status-base-modifier="{{ item.statusBaseModifier }}" level-modifier="{{ item.levelModifier }}" status-list="[[ statusList ]]"></create-statusbased-card>
+            <create-statusbased-card index="{{ index }}" name="{{ item.name }}" base-value="{{ item.baseValue }}" level-modifier="{{ item.levelModifier }}" dependency-list="{{ item.dependencyList }}" status-list="[[ statusList ]]" resources-list="[[ resourcesList ]]" defenses-list="[[ defensesList ]]" skills-list="[[ skillsList ]]"></create-statusbased-card>
 
         </template>
 
         <paper-fab icon="add" on-click="_newSkills"></paper-fab>
 
     </template>
+    
 </dom-module>
 
-<script>Polymer({is:"create-skills-tab",properties:{skillsList:{type:Array,notify:!0},statusList:{type:Array}},listeners:{requestDeleteCard:"_deleteSkills"},_newSkills:function(e){this.push("skillsList",{name:"Diplomacy/Heal...",value:0,baseValue:10,statusBase:"None",statusBaseModifier:1,levelModifier:.5,persistBonus:0,volatileBonus:0})},_deleteSkills:function(e){this.splice("skillsList",e.detail.index,1)}});</script>
+<script>Polymer({is:"create-skills-tab",properties:{statusList:{type:Array},resourcesList:{type:Array},defensesList:{type:Array},skillsList:{type:Array,notify:!0}},listeners:{requestDeleteCard:"_deleteSkills"},_newSkills:function(e){function s(){this.location="None",this.name="None",this.modifier=0}function i(e){this.name=e,this.value=0,this.baseValue=0,this.levelModifier=.5,this.persistBonus=0,this.volatileBonus=0,this.dependencyList=[new s]}this.push("skillsList",new i("Diplomacy"))},_deleteSkills:function(e){this.splice("skillsList",e.detail.index,1)}});</script>
 </div><dom-module id="snd-sheet-create">
 
     <template>
@@ -458,7 +473,9 @@
             }
         </style>
 
-        <paper-tabs noink="" scrollable="" hide-scroll-buttons="" selected="{{ tabSelected }}">
+        <snd-newsheet-data new-sheet="{{ newSheet }}"></snd-newsheet-data>
+
+        <paper-tabs id="sheetCreateTabs" noink="" scrollable="" hide-scroll-buttons="" selected="{{ tabSelected }}">
             <paper-tab>Basic</paper-tab>
             <paper-tab>Status</paper-tab>
             <paper-tab>Resources</paper-tab>
@@ -470,13 +487,13 @@
 
             <create-basic-tab name="{{ newSheet.name }}" job="{{ newSheet.job }}" race="{{ newSheet.race }}" level="{{ newSheet.level }}" system="{{ newSheet.system }}"></create-basic-tab>
 
-            <create-status-tab status-list="{{ newSheet.statusList }}"></create-status-tab>
+            <create-status-tab status-list="{{ newSheet.statusList }}" resources-list="[[ newSheet.resourcesList ]]" defenses-list="[[ newSheet.defensesList ]]" skills-list="[[ newSheet.skillsList ]]"></create-status-tab>
 
-            <create-resources-tab resources-list="{{ newSheet.resourcesList }}" status-list="[[ newSheet.statusList ]]"></create-resources-tab>
+            <create-resources-tab resources-list="{{ newSheet.resourcesList }}" status-list="[[ newSheet.statusList ]]" defenses-list="[[ newSheet.defensesList ]]" skills-list="[[ newSheet.skillsList ]]"></create-resources-tab>
 
-            <create-defenses-tab defenses-list="{{ newSheet.defensesList }}" status-list="[[ newSheet.statusList ]]"></create-defenses-tab>
+            <create-defenses-tab defenses-list="{{ newSheet.defensesList }}" status-list="[[ newSheet.statusList ]]" resources-list="[[ newSheet.resourcesList ]]" skills-list="[[ newSheet.skillsList ]]"></create-defenses-tab>
 
-            <create-skills-tab skills-list="{{ newSheet.skillsList }}" status-list="[[ newSheet.statusList ]]"></create-skills-tab>
+            <create-skills-tab skills-list="{{ newSheet.skillsList }}" status-list="[[ newSheet.statusList ]]" resources-list="[[ newSheet.resourcesList ]]" defenses-list="[[ newSheet.defensesList ]]"></create-skills-tab>
 
         </iron-pages>
 
@@ -494,7 +511,7 @@
 
     </template>
 
-    <script>Polymer({is:"snd-sheet-create",properties:{tabSelected:{type:String,value:"0",notify:!0},dialogOpen:{type:Boolean},newSheet:{type:Object,notify:!0},baseSheet:{type:Object,notify:!0},sheetList:{type:Object,notify:!0}},attached:function(e){Polymer.updateStyles()},_openSaveSheetDialog:function(e){this.dialogOpen=!this.dialogOpen},_saveSheet:function(e){var t=this;this.newSheet.statusList.forEach(function(e,n){e.value=parseInt(t._numberTypeCheck(e.baseValue))+parseFloat(t._numberTypeCheck(e.levelModifier))*parseInt(t._numberTypeCheck(t.newSheet.level))}),this.newSheet.resourcesList.forEach(function(e,n){if("None"!=e.statusBase){var s=Enumerable.From(t.newSheet.statusList).Where(function(t){return t.name==e.statusBase}).Select(function(e){return e.value}).ToString();e.value=parseInt(parseInt(t._numberTypeCheck(e.baseValue))+parseFloat(t._numberTypeCheck(e.statusBaseModifier))*parseInt(t._numberTypeCheck(s))+parseFloat(t._numberTypeCheck(e.levelModifier))*parseInt(t._numberTypeCheck(t.newSheet.level)))}else e.value=parseInt(parseInt(t._numberTypeCheck(e.baseValue))+parseFloat(t._numberTypeCheck(e.levelModifier))*parseInt(t._numberTypeCheck(t.newSheet.level)))}),this.newSheet.defensesList.forEach(function(e,n){if("None"!=e.statusBase){var s=Enumerable.From(t.newSheet.statusList).Where(function(t){return t.name==e.statusBase}).Select(function(e){return e.value}).ToString();e.value=parseInt(parseInt(t._numberTypeCheck(e.baseValue))+parseFloat(t._numberTypeCheck(e.statusBaseModifier))*parseInt(t._numberTypeCheck(s))+parseFloat(t._numberTypeCheck(e.levelModifier))*parseInt(t._numberTypeCheck(t.newSheet.level)))}else e.value=parseInt(parseInt(t._numberTypeCheck(e.baseValue))+parseFloat(t._numberTypeCheck(e.levelModifier))*parseInt(t._numberTypeCheck(t.newSheet.level)))}),this.newSheet.skillsList.forEach(function(e,n){if("None"!=e.statusBase){var s=Enumerable.From(t.newSheet.statusList).Where(function(t){return t.name==e.statusBase}).Select(function(e){return e.value}).ToString();e.value=parseInt(parseInt(t._numberTypeCheck(e.baseValue))+parseFloat(t._numberTypeCheck(e.statusBaseModifier))*parseInt(t._numberTypeCheck(s))+parseFloat(t._numberTypeCheck(e.levelModifier))*parseInt(t._numberTypeCheck(t.newSheet.level)))}else e.value=parseInt(parseInt(t._numberTypeCheck(e.baseValue))+parseFloat(t._numberTypeCheck(e.levelModifier))*parseInt(t._numberTypeCheck(t.newSheet.level)))}),this.push("sheetList.list",this.newSheet),this.set("newSheet",this.baseSheet),this.fire("requestChangeRoute",{route:"/list"})},_numberTypeCheck:function(e){return isNaN(parseInt(e))?"0":e}});</script>
+    <script>Polymer({is:"snd-sheet-create",properties:{tabSelected:{type:String,value:"0",notify:!0},dialogOpen:{type:Boolean},dependencyChain:{type:Array,value:[]},sheetList:{type:Object,notify:!0},newSheet:{type:Object,notify:!0}},attached:function(e){Polymer.updateStyles()},_openSaveSheetDialog:function(e){this.dialogOpen=!this.dialogOpen},_numberTypeCheck:function(e){return isNaN(parseInt(e))?"0":e},sheetBaseContructor:function(){function e(){this.name="",this.job="",this.race="",this.level="1",this.system="",this.statusList=[new t],this.resourcesList=[new i("HP")],this.defensesList=[new i("Armor")],this.skillsList=[new i("Diplomacy")],this.persistBonusList=[],this.volatileBonusList=[]}function n(){this.location="None",this.name="None",this.modifier=0}function t(){this.name="Strength",this.value=0,this.baseValue=0,this.minimumModifierValue=10,this.levelModifier=0,this.persistBonus=0,this.volatileBonus=0,this.dependencyList=[new n]}function i(e){this.name=e,this.value=0,this.baseValue=0,this.levelModifier=.5,this.persistBonus=0,this.volatileBonus=0,this.dependencyList=[new n]}return new e},_saveSheet:function(){var e=this;parseInt(e._numberTypeCheck(e.newSheet.level)),this.newSheet.statusList.forEach(function(n){0===n.value&&(e.dependencyChain.push(n),e._objectCalculation(n),e.dependencyChain=[])}),this.newSheet.resourcesList.forEach(function(n){0===n.value&&(e.dependencyChain.push(n),e._objectCalculation(n),e.dependencyChain=[])}),this.newSheet.defensesList.forEach(function(n){0===n.value&&(e.dependencyChain.push(n),e._objectCalculation(n),e.dependencyChain=[])}),this.newSheet.skillsList.forEach(function(n){0===n.value&&(e.dependencyChain.push(n),e._objectCalculation(n),e.dependencyChain=[])}),this.tabSelected=0,this.push("sheetList.list",this.newSheet),this.set("newSheet",this.sheetBaseContructor()),this.fire("requestChangeRoute",{route:"/list"})},_objectCalculation:function(e){var n=this;e.dependencyList.length>0?(this.dependencyElements=[],e.dependencyList.forEach(function(e){Object.keys(n.newSheet).forEach(function(t){t==e.location&&n.newSheet[t].forEach(function(t){t.name==e.name&&n.dependencyElements.push(t)})})}),Enumerable.From(n.dependencyElements).Where(function(e){return 0===e.value}).Select(function(e){return e}).ToArray().forEach(function(e){n.dependencyChain.forEach(function(t){if(t.name==e.name)throw n.dependencyChain.push(e),console.log(dependencyChain),"Deadlock Warlord"}),n.dependencyChain.push(e),n._objectCalculation(e)}),n.dependencyElements=[],e.dependencyList.forEach(function(e){Object.keys(n.newSheet).forEach(function(t){t==e.location&&n.newSheet[t].forEach(function(t){t.name==e.name&&n.dependencyElements.push(t)})})}),e.value=parseInt(parseInt(n._numberTypeCheck(e.baseValue))+parseInt(n._numberTypeCheck(n.newSheet.level))*parseFloat(n._numberTypeCheck(e.levelModifier))),console.log("Init "+e.name+" the Element Value: "+e.value),e.dependencyList.forEach(function(t){n.dependencyElements.forEach(function(i){i.name==t.name&&(e.value=parseInt(n._numberTypeCheck(e.value)+parseInt(n._numberTypeCheck(i.value))*parseFloat(n._numberTypeCheck(t.value))),console.log("Update "+e.name+" Value with "+i.name+" Value: "+e.value))})}),n.dependencyElements=[],console.log("End "+e.name+" Value Calculation: "+e.value)):(e.value=e.baseValue,console.log("Init "+e.name+" the Element Value: "+e.value),console.log("End "+e.name+" Value Calculation: "+e.value))}});</script>
 
 </dom-module>
 </body></html>

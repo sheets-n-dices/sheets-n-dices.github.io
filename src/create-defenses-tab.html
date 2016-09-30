@@ -1,11 +1,12 @@
 <html><head><meta charset="UTF-8"><link rel="import" href="snd-app.html"></head><body><dom-module id="create-defenses-tab">
+
     <template>
 
         <style>
             :host {
                 display: block;
                 @apply(--layout-vertical);
-                padding: 16px;
+                padding: 16px 0;
             }
 
             paper-fab {
@@ -17,14 +18,15 @@
 
         <template is="dom-repeat" items="{{ defensesList }}">
 
-            <create-statusbased-card index="{{ index }}" name="{{ item.name }}" base-value="{{ item.baseValue }}" status-base="{{ item.statusBase }}" status-base-modifier="{{ item.statusBaseModifier }}" level-modifier="{{ item.levelModifier }}" status-list="[[ statusList ]]"></create-statusbased-card>
+            <create-statusbased-card index="{{ index }}" name="{{ item.name }}" base-value="{{ item.baseValue }}" level-modifier="{{ item.levelModifier }}" dependency-list="{{ item.dependencyList }}" status-list="[[ statusList ]]" resources-list="[[ resourcesList ]]" defenses-list="[[ defensesList ]]" skills-list="[[ skillsList ]]"></create-statusbased-card>
 
         </template>
 
         <paper-fab icon="add" on-click="_newDefenses"></paper-fab>
 
     </template>
+    
 </dom-module>
 
-<script>Polymer({is:"create-defenses-tab",properties:{defensesList:{type:Array,notify:!0},statusList:{type:Array}},listeners:{requestDeleteCard:"_deleteDefenses"},_newDefenses:function(e){this.push("defensesList",{name:"Armor/Magic Resistence/...",value:0,baseValue:0,statusBase:"None",statusBaseModifier:1,levelModifier:.5,persistBonus:0,volatileBonus:0})},_deleteDefenses:function(e){this.splice("defensesList",e.detail.index,1)}});</script>
+<script>Polymer({is:"create-defenses-tab",properties:{statusList:{type:Array},resourcesList:{type:Array},defensesList:{type:Array,notify:!0},skillsList:{type:Array}},listeners:{requestDeleteCard:"_deleteDefenses"},_newDefenses:function(e){function s(){this.location="None",this.name="None",this.modifier=0}function t(e){this.name=e,this.value=0,this.baseValue=0,this.levelModifier=.5,this.persistBonus=0,this.volatileBonus=0,this.dependencyList=[new s]}this.push("defensesList",new t("Armor"))},_deleteDefenses:function(e){this.splice("defensesList",e.detail.index,1)}});</script>
 </body></html>

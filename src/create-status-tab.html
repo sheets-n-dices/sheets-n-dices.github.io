@@ -6,7 +6,7 @@
             :host {
                 display: block;
                 @apply(--layout-vertical);
-                padding: 16px;
+                padding: 16px 0;
             }
 
             paper-fab {
@@ -18,7 +18,7 @@
 
         <template is="dom-repeat" items="{{ statusList }}">
 
-            <create-status-card index="{{ index }}" name="{{ item.name }}" base-value="{{ item.baseValue }}" level-modifier="{{ item.levelModifier }}"></create-status-card>
+            <create-status-card index="{{ index }}" name="{{ item.name }}" base-value="{{ item.baseValue }}" level-modifier="{{ item.levelModifier }}" dependency-list="{{ item.dependencyList }}" status-list="[[ statusList ]]" resources-list="[[ resourcesList ]]" defenses-list="[[ defensesList ]]" skills-list="[[ skillsList ]]"></create-status-card>
 
         </template>
 
@@ -28,5 +28,5 @@
 
 </dom-module>
 
-<script>Polymer({is:"create-status-tab",properties:{statusList:{type:Array,notify:!0}},listeners:{requestDeleteStatus:"_deleteStatus"},_newStatus:function(t){this.push("statusList",{name:"Str/Dex/Int/...",value:0,baseValue:0,levelModifier:0,persistBonus:0,volatileBonus:0})},_deleteStatus:function(t){this.splice("statusList",t.detail.index,1)}});</script>
+<script>Polymer({is:"create-status-tab",properties:{statusList:{type:Array,notify:!0},resourcesList:{type:Array},defensesList:{type:Array},skillsList:{type:Array}},listeners:{requestDeleteStatus:"_deleteStatus"},_newStatus:function(t){function e(){this.location="None",this.name="None",this.modifier=0}function s(){this.name="Strength",this.value=0,this.baseValue=0,this.minimumModifierValue=10,this.levelModifier=0,this.persistBonus=0,this.volatileBonus=0,this.dependencyList=[new e]}this.push("statusList",new s)},_deleteStatus:function(t){this.splice("statusList",t.detail.index,1)}});</script>
 </body></html>

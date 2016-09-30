@@ -6,5 +6,5 @@
     </template>
 </dom-module>
 
-<script>Polymer({is:"snd-newsheet-data",properties:{newSheet:{type:Object,notify:!0,reflectToAttribute:!0}},_initializeNewSheet:function(e){"undefined"!=typeof this.newSheet&&null!=this.newSheet||null==this.baseSheet||(this.newSheet=Object.assign({},this.baseSheet),console.log("Creating Sheet Assigned as Base Sheet"))}});</script>
+<script>Polymer({is:"snd-newsheet-data",properties:{newSheet:{type:Object,notify:!0}},sheetBaseContructor:function(){function e(){this.name="",this.job="",this.race="",this.level="1",this.system="",this.statusList=[new s],this.resourcesList=[new i("HP")],this.defensesList=[new i("Armor")],this.skillsList=[new i("Diplomacy")],this.persistBonusList=[],this.volatileBonusList=[]}function t(){this.location="None",this.name="None",this.modifier=0}function s(){this.name="Strength",this.value=0,this.baseValue=0,this.minimumModifierValue=10,this.levelModifier=0,this.persistBonus=0,this.volatileBonus=0,this.dependencyList=[new t]}function i(e){this.name=e,this.value=0,this.baseValue=0,this.levelModifier=.5,this.persistBonus=0,this.volatileBonus=0,this.dependencyList=[new t]}return new e},_initializeNewSheet:function(e){this.newSheet||(this.set("newSheet",this.sheetBaseContructor()),console.log("Creating Sheet Assigned as Base Sheet"))}});</script>
 </body></html>
